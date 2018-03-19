@@ -21,6 +21,7 @@ class BlogController extends Controller
     {
         $posts = Post::orderBy('created_at','desc')->paginate(5);
         return view('list',compact('posts'));
+        // this is comment
     }
 
     /**
