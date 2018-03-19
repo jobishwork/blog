@@ -18,13 +18,12 @@ class PostsTableSeeder extends Seeder
 	        DB::table('posts')->insert([
 	            'user_id' => User::inRandomOrder()->first()->id,
 	            'title' => $faker->sentence($nbWords = 6),
-                'introduction' => $faker->paragraph(2),
 	            'post' => $faker->paragraph(25),
                 'status' => 1,
                 'created_at' => $faker->dateTimeBetween($startDate = '-1 year', $endDate = 'now', $timezone = date_default_timezone_get()),
                 'updated_at' => $faker->dateTimeBetween($startDate = '-1 year', $endDate = 'now', $timezone = date_default_timezone_get())
 	        ]);
         }
-        $this->command->info("Posts table seeded)");
+        $this->command->info("Articles table seeded)");
     }
 }

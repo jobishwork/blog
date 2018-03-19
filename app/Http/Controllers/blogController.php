@@ -54,7 +54,7 @@ class BlogController extends Controller
         $post->save();
         $post->categories()->attach($request->categories);
 
-        Session::flash('message', 'New post has been added successfully.');
+        Session::flash('message', 'New Article has been added successfully.');
 
         return back();
     }
@@ -107,7 +107,7 @@ class BlogController extends Controller
         $blog->status = $request->status;
         $blog->save();
         $blog->categories()->sync($request->categories);
-        Session::flash('message', 'Post has been updated successfully.');
+        Session::flash('message', 'Article has been updated successfully.');
         return back();
     }
 
@@ -131,7 +131,7 @@ class BlogController extends Controller
     public function category($id)
     {
         $category = Category::find($id);
-        $page_title = "Posts of category '$category->category'";
+        $page_title = "Articles of category '$category->category'";
         $posts = $category->posts()->orderBy('created_at','desc')->paginate(5);
         return view('list',compact('posts','page_title'));
     }
@@ -139,7 +139,7 @@ class BlogController extends Controller
     public function user($id)
     {
         $user = user::find($id);
-        $page_title = "Posts by '$user->name'";
+        $page_title = "Created by '$user->name'";
         $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
         return view('list',compact('posts','page_title'));
     }

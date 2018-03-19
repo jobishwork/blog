@@ -13,7 +13,7 @@
          @if(count($posts))
             @foreach($posts as $post_array)
             <h3><a href="{{url('blog/'.$post_array->id)}}">{{$post_array->title}}</a></h3>
-            <p><span class="glyphicon glyphicon-time"></span> <i>Posted on {{date('F d, Y',strtotime($post_array->created_at))}} by <a href="{{url('blog/user/'.$post_array->user->id)}}">{{$post_array->user->name}}</a></i></p>
+            <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($post_array->created_at))}} by <a href="{{url('blog/user/'.$post_array->user->id)}}">{{$post_array->user->name}}</a></i></p>
             <p>
                @if(strlen($post_array->post) > 500)
                   {!! nl2br(e(str_limit($post_array->post, $limit = 500, $end = '...'))) !!}

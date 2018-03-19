@@ -5,8 +5,8 @@
       <!-- Blog Post Content Column -->
       <div class="col-lg-8">
          <h3><a href="">{{$blog->title}}</a></h3>
-         <p><span class="glyphicon glyphicon-time"></span> <i>Posted on {{date('F d, Y',strtotime($blog->created_at))}} by <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a></i></p>
-         {!! nl2br(e($blog->post)) !!} 
+         <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a></i></p>
+         {!! nl2br(e($blog->post)) !!}
          <br><br>
             @foreach($blog->categories as $category_array)
             <a href="{{url('blog/category/'.$category_array->id)}}" class="btn btn-default btn-xs">{{$category_array->category}}</a>
@@ -49,12 +49,12 @@
             @endforeach
 
           @else
-            
+
                <div class="media">
                   <i>No comments found.</i>
                </div>
 
-          @endif  
+          @endif
 
       </div>
       <!-- Blog Sidebar Widgets Column -->

@@ -4,7 +4,7 @@
   <div class="row">
     <!-- Blog Post Content Column -->
     <div class="col-lg-8">
-      <h3><a href="">My Blog Posts</a></h3>
+      <h3><a href="">My Articles</a></h3>
       <hr>
       <table class="table">
         <thead>
@@ -22,12 +22,12 @@
               <td>{{date('d M Y',strtotime($post_array->created_at))}}</td>
               <td><a href="{{url("blog/$post_array->id/edit")}}">Edit</a></td>
             </tr>
-          @endForeach  
+          @endForeach
         @else
             <tr>
               <td colspan="3"><i>No records found.</i></td>
-            </tr>        
-        @endIF  
+            </tr>
+        @endIF
         <tr>
            <td align="center" colspan="3">{{$posts->links()}} </td>
         </tr>

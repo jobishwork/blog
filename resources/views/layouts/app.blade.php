@@ -30,12 +30,12 @@
                </ul>
                <ul class="nav navbar-nav navbar-right">
                   @if (Auth::guest())
-                  <li><a href="{{ url('/login?ref=add-post') }}">Add Post</a></li>
+                  <li><a href="{{ url('/login?ref=add-post') }}">Add Article</a></li>
                   <li><a href="{{ url('/login') }}">Login</a></li>
                   <li><a href="{{ url('/register') }}">Register</a></li>
                   @else
-                  <li><a href="{{ url('/blog/create') }}">Add Post</a></li>
-                  <li><a href="{{ url('/blog/manage') }}">Manage My Posts</a></li>
+                  <li><a href="{{ url('/blog/create') }}">Add Article</a></li>
+                  <li><a href="{{ url('/blog/manage') }}">Manage My Articles</a></li>
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         {{ Auth::user()->name }} <span class="caret"></span>

@@ -22,11 +22,11 @@
             </div>
          </div>
          <div class="well">
-            <h4>Recent Posts</h4>
+            <h4>Recent Articles</h4>
             <ul class="list-group">
                @foreach($posts as $post_array)
                   <li class="list-group-item"> <a href="{{url('blog/'.$post_array->id)}}">{{$post_array->title}}</a></li>
-               @endforeach               
+               @endforeach
             </ul>
          </div>
          <div class="well">
@@ -34,6 +34,6 @@
             <ul class="list-group">
                @foreach($comments as $comment_array)
                <li class="list-group-item"> {{$comment_array->comment}} <a href="{{url('blog/user/'.$comment_array->user->id)}}"><i>{{$comment_array->user->name}}</i></a> </li>
-               @endforeach               
+               @endforeach
             </ul>
          </div>
