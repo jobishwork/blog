@@ -6,10 +6,14 @@
     <div class="col-lg-8">
       <h3><a href="">My Articles</a></h3>
       <hr>
+      @if(Session::has('message'))
+        <p class="alert alert-warning">{{ Session::get('message') }}</p>
+      @endif
       <table class="table">
         <thead>
           <tr>
             <th width="70%">Title</th>
+            <th>Locked</th>
             <th>Created date</th>
             <th>Edit</th>
           </tr>
@@ -17,8 +21,13 @@
         <tbody>
         @if(count($posts))
           @foreach($posts as $post_array)
-            <tr>
+            <tr >
               <td>{{$post_array->title}}</td>
+              @if($post_array->is_locked)
+                <td align="center">Yes</td>
+              @else
+                <td align="center">No</td>
+              @endif
               <td>{{date('d M Y',strtotime($post_array->created_at))}}</td>
               <td><a href="{{url("blog/$post_array->id/edit")}}">Edit</a></td>
             </tr>

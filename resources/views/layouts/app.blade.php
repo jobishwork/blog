@@ -42,6 +42,9 @@
                      </a>
                      <ul class="dropdown-menu" role="menu">
                         <li>
+                           <a href="{{ url('/password/change') }}">Change Password</a>
+                        </li>
+                        <li>
                            <a href="{{ url('/logout') }}"
                               onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">
@@ -79,5 +82,22 @@
             placeholder: "Select one more categories"
          });
       </script>
+      <script src="{{ url('/') }}/js/jscroll/jquery.jscroll.js"></script>
+
+      <script type="text/javascript">
+    $('ul.pagination').hide();
+    $(function() {
+        $('.infinite-scroll').jscroll({
+            autoTrigger: true,
+            loadingHtml: '<img class="center-block" src="{{ url('/') }}/images/loading.gif" alt="Loading...." />',
+            padding: 0,
+            nextSelector: '.pagination li.active + li a',
+            contentSelector: 'div.infinite-scroll',
+            callback: function() {
+                $('ul.pagination').remove();
+            }
+        });
+    });
+</script>
    </body>
 </html>

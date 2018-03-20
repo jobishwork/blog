@@ -26,20 +26,22 @@
              <input type="text" name="title" value="{{$post->title}}" class="form-control" id="title">
            </div>
            <div class="form-group">
-               <label for="introduction">Introduction</label>
-               <textarea rows="3" name="introduction" class="form-control">{{$post->introduction}}</textarea>
-            </div>
-           <div class="form-group">
-             <label for="post">Article</label>
-             <textarea rows="6" name="post" class="form-control">{{$post->post}}</textarea>
-           </div>
-           <div class="form-group">
                <label for="status">Locked Article?</label>
-               <select class="form-control" id="is_locked" name="is_locked">
+               <select class="form-control" id="is_locked" name="is_locked" onchange="LockStatusChanged(this.value)">
                   <option value="1" @if((int)$post->is_locked) selected @endIF>Yes</option>
                   <option value="0" @if(!(int)$post->is_locked) selected @endIF>No</option>
                </select>
             </div>
+
+           <div class="form-group" id="introductionContainer" @if(!(int)$post->is_locked) style="display: none" @endif>
+               <label for="introduction">Introduction</label>
+               <textarea rows="3" name="introduction" class="form-control">{{$post->introduction}}</textarea>
+            </div>
+
+           <div class="form-group">
+             <label for="post">Article</label>
+             <textarea rows="6" name="post" class="form-control">{{$post->post}}</textarea>
+           </div>
            <div class="form-group">
              <label for="categories">Categories</label>
              <select multiple class="form-control js-example-basic-multiple" name="categories[]" id="categories">
@@ -55,7 +57,8 @@
                <option value="0" @if(!(int)$post->status) selected @endIF>Draft</option>
              </select>
            </div>
-           <button type="submit" class="btn btn-primary">Submit</button>
+           <a class="btn btn-danger" href="{{ url('post/'.$post->id.'/destroy') }}" onclick="return confirm('Do you want to Delete the Product?')" >Delete</a>
+           <button type="submit" class="btn btn-primary">Update</button>
          </form>
 
       </div>
@@ -65,5 +68,13 @@
       </div>
    </div>
 </div>
-</div>
+  <script>
+         function LockStatusChanged(value)
+         {
+            if(parseInt(value))
+               $('#introductionContainer').show();
+            else
+               $('#introductionContainer').hide();
+         }
+      </script>
 @endsection

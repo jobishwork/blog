@@ -99,7 +99,6 @@ class BlogController extends Controller
     public function update(Request $request, Post $blog)
     {
         $this->validate($request, $this->validationRules(), $this->customErrorMessages());
-
         $blog->title = $request->title;
         $blog->introduction = $request->introduction;
         $blog->post = $request->post;
@@ -119,7 +118,9 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+        return redirect('blog/manage')->with('message','Article Deleted successfully');
     }
 
     public function manage()
@@ -172,6 +173,7 @@ class BlogController extends Controller
     {
         return $rules = [
                 'title' => 'required',
+                'introduction' => 'max:500',
                 'post' => 'required',
                 'categories' => 'required',
             ];

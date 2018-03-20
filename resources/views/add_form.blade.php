@@ -27,11 +27,11 @@
             <div class="form-group">
                <label for="status">Locked Article?</label>
                <select class="form-control" id="is_locked" name="is_locked" onchange="LockStatusChanged(this.value)" >
-                  <option @if(old('status') === '0') selected @endIF value="0">No</option>
-                  <option @if(old('status') === '1') selected @endIF value="1">Yes</option>
+                  <option @if(old('is_locked') === '0') selected @endIF value="0">No</option>
+                  <option @if(old('is_locked') === '1') selected @endIF value="1">Yes</option>
                </select>
             </div>
-            <div class="form-group" id="introductionContainer" style="display: none">
+            <div class="form-group" id="introductionContainer" @if(!old('is_locked')) style="display: none" @endIF>
                <label for="introduction">Introduction</label>
                <textarea rows="3" name="introduction" id="introduction" class="form-control">{{old('introduction')}}</textarea>
             </div>

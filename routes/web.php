@@ -26,3 +26,7 @@ Route::get('blog/category/{id}', 'BlogController@category');
 Route::get('blog/user/{id}', 'BlogController@user');
 Route::post('blog/comment/{blog}', 'BlogController@comment');
 Route::resource('blog', 'BlogController');
+Route::get('post/{id}/destroy', 'BlogController@destroy');
+
+Route::get('password/change','Auth\ResetPasswordController@changeForm');
+Route::post('password/change','Auth\ResetPasswordController@change');
