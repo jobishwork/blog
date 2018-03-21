@@ -41,9 +41,11 @@
                         {{ Auth::user()->name }} <span class="caret"></span>
                      </a>
                      <ul class="dropdown-menu" role="menu">
-                        <li>
-                           <a href="{{ url('/password/change') }}">Change Password</a>
-                        </li>
+                        <li><a href="{{ url('/profile/edit/'.Auth::user()->id) }}">Profile</a></li>
+                        <li><a href="{{ url('/tags') }}">Tags</a></li>
+                        <li><a href="{{ url('/favorite') }}">My favorite</a></li>
+                        <li><a href="{{ url('/notification') }}">Notification</a></li>
+                        <li><a href="{{ url('/settings') }}">Settings</a></li>
                         <li>
                            <a href="{{ url('/logout') }}"
                               onclick="event.preventDefault();

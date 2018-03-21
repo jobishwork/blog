@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Session;
+use DB;
 
 class RegisterController extends Controller
 {
@@ -38,7 +39,8 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except('edit','update');
+        $this->middleware('auth')->only('edit', 'update');
     }
 
     /**
@@ -77,4 +79,27 @@ class RegisterController extends Controller
         return redirect()->intended($this->redirectPath());
     }
 
+    public function edit($id)
+    {
+        $user = User::find($id);
+        return view('Auth\editprofile',compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+                'name' => 'required|string|max:100',
+                'email' => 'required|email|max:255|unique:users,email,'.$id,
+          ]);
+
+        DB::transaction(function () use ($request, $id)
+            {
+                $user = User::find($id);
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $user->save();
+            });
+        Session::flash('success', 'Profile has been updated successfully.');
+        return back();
+    }
 }

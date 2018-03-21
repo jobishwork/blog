@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,3 +29,11 @@ Route::get('post/{id}/destroy', 'BlogController@destroy');
 
 Route::get('password/change','Auth\ResetPasswordController@changeForm');
 Route::post('password/change','Auth\ResetPasswordController@change');
+
+Route::get('profile/edit/{id}', 'Auth\RegisterController@edit');
+Route::post('profile/update/{id}', 'Auth\RegisterController@update');
+
+Route::get('tags', 'TagController@index');
+Route::get('favorite', 'FavoriteController@index');
+Route::get('notification', 'NotificationController@index');
+Route::get('settings', 'Auth\ResetPasswordController@changeForm');
