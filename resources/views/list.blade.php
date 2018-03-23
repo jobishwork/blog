@@ -2,7 +2,10 @@
 @section('content')
 <div class="container">
    <div class="row">
-      <div class="col-lg-8">
+      <div class="col-md-3 right-sidebar">
+      @include('sidebar')
+      </div>      
+      <div class="col-lg-9">
          @if(Session::has('message'))
          <p class="alert alert-success">{{ Session::get('message') }}</p>
          @endif
@@ -43,9 +46,6 @@
          @else
             <div class="no-records"><i><h5>No records found.</h5></i></div>
          @endIf
-      </div>
-      <div class="col-md-4 right-sidebar">
-      @include('sidebar')
       </div>
    </div>
 </div>
