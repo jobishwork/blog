@@ -3,15 +3,28 @@
 <div class="container">
    <div class="row">
       <!-- Blog Post Content Column -->
-      <div class="col-lg-8">
+      <div class="col-md-3 right-sidebar">
+         @include('sidebar')
+      </div>      
+      <div class="col-lg-9">
          <h3><a href="">{{$blog->title}}</a></h3>
-         <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a></i></p>
+         <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a> <a class="btn btn-default btn-xs" href="">Follow</a></i></p>
          {!! nl2br(e($blog->post)) !!}
          <br><br>
+
             @foreach($blog->categories as $category_array)
             <a href="{{url('blog/category/'.$category_array->id)}}" class="btn btn-default btn-xs">{{$category_array->category}}</a>
             @endforeach
+
+            <div class="row pull-right">                
+                  <div class="col-md-12"  style="margin-top:8px;">
+                            <a href="" class="btn btn-primary btn-xs">Save</a>
+                            <a href="" class="btn btn-danger btn-xs">Report</a>
+                  </div>
+            </div>
+            
          <hr>
+
 
          @if(Auth::check())
          <div class="well">
@@ -58,9 +71,7 @@
 
       </div>
       <!-- Blog Sidebar Widgets Column -->
-      <div class="col-md-4 right-sidebar">
-         @include('sidebar')
-      </div>
+
    </div>
 </div>
 </div>
