@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            @if(Request::input('ref') == 'add-post')
+            @if(Request::input('ref') == ('add-post' || 'save'))
             <p class="alert alert-warning">Please login to continue.</p>
             @endIf
             <div class="panel panel-default">

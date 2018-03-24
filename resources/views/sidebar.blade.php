@@ -3,8 +3,8 @@
 
          <ul class="list-group" style="margin-bottom:0px;">
             <li class="list-group-item"> <a href="{{url('.')}}">Home</a> </li>
-            <li class="list-group-item"> <a href="{{url('.')}}"> New Articles </a> </li>
-            <li class="list-group-item"> <a href="{{url('.')}}"> Top Articles </a> </li>
+            <li class="list-group-item"> <a href="{{url('newArticles')}}"> New Articles </a> </li>
+            <li class="list-group-item"> <a href="{{url('topArticles')}}"> Top Articles </a> </li>
             <li class="list-group-item"> <a href="{{url('.')}}"> Saved Articles </a> </li>
          </ul>
 
@@ -22,11 +22,11 @@
          <div class="well">
             <div class="row">
                <div class="col-lg-12">
-                  <ul style="padding-left:20px;">                                    
+                  <ul style="padding-left:20px;">
                   @foreach($categories as $category_array)
                   <li>
                      <a href="{{url('blog/category/'.$category_array->id)}}">{{$category_array->category}}</a>
-                  </li>                     
+                  </li>
                   @endforeach
                   </ul>
                </div>

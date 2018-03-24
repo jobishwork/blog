@@ -4,7 +4,7 @@
    <div class="row">
       <div class="col-md-3 right-sidebar">
       @include('sidebar')
-      </div>      
+      </div>
       <div class="col-lg-9">
          @if(Session::has('message'))
          <p class="alert alert-success">{{ Session::get('message') }}</p>
@@ -30,12 +30,24 @@
                   {!! nl2br(e($post_array->post)) !!}
                @endIf
             </p>
-            <div class="row">                
-                  <div class="col-md-12"  style="margin-top:8px;">
-                            <a href="" class="btn btn-default btn-xs">145 views</a>
-                            <a href="" class="btn btn-primary btn-xs">Save</a>
-                            <a href="" class="btn btn-danger btn-xs">Report</a>                            
-                  </div>
+            <div class="row">
+            <div class="col-md-12"  style="margin-top:8px;">
+                <a href="" class="btn btn-default btn-xs">{{$post_array->view_count}} views</a>
+                @if (Auth::guest())
+                    <a class="btn btn-primary btn-xs"  href="{{ url('/login?ref=save') }}">Save</a>
+                @else
+                    <a href="{{ url('saveArticle/'.$post_array->id) }}" class="btn btn-primary btn-xs">
+                        @foreach($saved_articles as $saved_article)
+                          @if($saved_article->pivot->post_id == $post_array->id)
+                            Saved
+                          @else
+                            Save
+                          @endif
+                        @endforeach
+                    </a>
+                @endif
+                <a href="" class="btn btn-danger btn-xs">Report</a>
+            </div>
             </div>
             <hr>
             @endforeach

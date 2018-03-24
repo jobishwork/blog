@@ -5,7 +5,7 @@
       <!-- Blog Post Content Column -->
       <div class="col-md-3 right-sidebar">
          @include('sidebar')
-      </div>      
+      </div>
       <div class="col-lg-9">
          <h3><a href="">{{$blog->title}}</a></h3>
          <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a> <a class="btn btn-default btn-xs" href="">Follow</a></i></p>
@@ -16,13 +16,14 @@
             <a href="{{url('blog/category/'.$category_array->id)}}" class="btn btn-default btn-xs">{{$category_array->category}}</a>
             @endforeach
 
-            <div class="row pull-right">                
-                  <div class="col-md-12"  style="margin-top:8px;">
-                            <a href="" class="btn btn-primary btn-xs">Save</a>
-                            <a href="" class="btn btn-danger btn-xs">Report</a>
-                  </div>
+            <div class="row pull-right">
+                <div class="col-md-12"  style="margin-top:8px;">
+                    <a href="" class="btn btn-default btn-xs">{{$blog->view_count}} views</a>
+                    <a href="" class="btn btn-primary btn-xs">Save</a>
+                    <a href="" class="btn btn-danger btn-xs">Report</a>
+                </div>
             </div>
-            
+
          <hr>
 
 

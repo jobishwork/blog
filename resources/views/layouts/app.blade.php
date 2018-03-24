@@ -36,18 +36,11 @@
             </div>
         </div>
         </form>
-
-
-
         </div>
-
-
-                     
-
                <ul class="nav navbar-nav navbar-right">
 
-                  
-                  
+
+
 
                   @if (Auth::guest())
 

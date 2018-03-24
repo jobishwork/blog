@@ -35,5 +35,10 @@ class User extends Authenticatable
     public function Comments()
     {
         return $this->hasMany("App\Comment");
-    }    
+    }
+
+    public function savedArticles()
+    {
+        return $this->BelongsToMany("App\Post","saved_articles");
+    }
 }

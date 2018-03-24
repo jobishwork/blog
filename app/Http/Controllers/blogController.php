@@ -7,6 +7,8 @@ use App\Post;
 use App\Category;
 use App\User;
 use App\Comment;
+use App\ViewCount;
+use App\SavedArticle;
 use Auth;
 use Session;
 
@@ -19,9 +21,18 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('created_at','desc')->paginate(5);
-        return view('list',compact('posts'));
-        // this is comment
+        if (Auth::user())
+        {
+            $user = Auth::user();
+            return $saved_articles = $user->savedArticles()->get()->toArray();
+            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts','saved_articles'));
+        }
+        else
+        {
+            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts'));
+        }
     }
 
     /**
@@ -68,8 +79,26 @@ class BlogController extends Controller
      */
     public function show(Post $blog)
     {
-       $comments = $blog->comments;
-       return view('view',compact('blog','comments'));
+        // if($blog->view_count)
+        // {
+        //     $count = $blog->view_count->count;
+        //     $blog->view_count->count = $count + 1;
+        //     $blog->view_count->save();
+        // }
+        // else
+        // {
+        //     $view_count = new ViewCount;
+        //     $view_count->post_id = $blog->id;
+        //     $view_count->count = 1;
+        //     $view_count->save();
+        // }
+
+        $count = $blog->view_count;
+        $blog->view_count = $count + 1;
+        $blog->save();
+
+        $comments = $blog->comments;
+        return view('view',compact('blog','comments'));
     }
 
     /**
@@ -144,6 +173,33 @@ class BlogController extends Controller
         $page_title = "Created by '$user->name'";
         $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
         return view('list',compact('posts','page_title'));
+    }
+
+    public function topArticles()
+    {
+        $posts = Post::orderBy('view_count','desc')->paginate(5);
+        return view('list',compact('posts'));
+    }
+
+    public function saveArticle($id)
+    {
+// return $id;
+        $post = Post::find($id);
+        $user = Auth::user();
+        // return $post->savedArticles()->get()->first()->pivot;
+        // return $saved = $post->savedArticles()->get();
+        return $user->savedArticles()->get();
+        foreach ($saved as $s)
+        {
+            return $s->pivot->user_id;
+        }
+
+
+
+        // $post->savedArticles()->attach($user);
+        //$user->savedArticles()->attach($post);
+
+        return back();
     }
 
     public function comment(Request $request, Post $blog)

@@ -5,7 +5,7 @@
       <!-- Blog Post Content Column -->
       <div class="col-md-3 right-sidebar">
          @include('sidebar')
-      </div>      
+      </div>
       <div class="col-lg-9">
          <h3><a href="">Add Article</a></h3>
          <hr>
@@ -25,7 +25,7 @@
             {{ csrf_field() }}
             <div class="form-group">
                <label for="title">Title</label>
-               <input type="text" name="title" class="form-control" value="{{old('title')}}" id="title">
+               <input type="text" autofocus="" name="title" class="form-control" value="{{old('title')}}" id="title">
             </div>
             <div class="form-group">
                <label for="status">Locked Article?</label>
