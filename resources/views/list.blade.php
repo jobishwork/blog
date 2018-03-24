@@ -32,8 +32,9 @@
             </p>
             <div class="row">                
                   <div class="col-md-12"  style="margin-top:8px;">
+                            <a href="" class="btn btn-default btn-xs">145 views</a>
                             <a href="" class="btn btn-primary btn-xs">Save</a>
-                            <a href="" class="btn btn-danger btn-xs">Report</a>
+                            <a href="" class="btn btn-danger btn-xs">Report</a>                            
                   </div>
             </div>
             <hr>
