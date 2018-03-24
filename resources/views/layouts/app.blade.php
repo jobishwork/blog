@@ -24,16 +24,43 @@
                </a>
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
+
+
+
                <!-- Left Side Of Navbar -->
                <ul class="nav navbar-nav">
                   <li><a href="{{ url('/') }}">Home</a></li>
                </ul>
+
+      <div class="col-sm-4 col-md-4">
+        <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+        </form>
+
+
+
+        </div>
+
+
+                     
+
                <ul class="nav navbar-nav navbar-right">
+
+                  
+                  
+
                   @if (Auth::guest())
-                  <li><a href="{{ url('/login?ref=add-post') }}">Add Article</a></li>
+
+                  <li><a  href="{{ url('/login?ref=add-post') }}">Add Article</a></li>
                   <li><a href="{{ url('/login') }}">Login</a></li>
                   <li><a href="{{ url('/register') }}">Register</a></li>
                   @else
+                  <li> <a style="background-color:#11998e;color:#fff;margin:0px;" href="">140 Credits Avaible</a> </li>
                   <li><a href="{{ url('/blog/create') }}">Add Article</a></li>
                   <li><a href="{{ url('/blog/manage') }}">Manage My Articles</a></li>
                   <li class="dropdown">

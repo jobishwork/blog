@@ -3,7 +3,10 @@
 <div class="container">
    <div class="row">
       <!-- Blog Post Content Column -->
-      <div class="col-lg-8">
+      <div class="col-md-3 right-sidebar">
+         @include('sidebar')
+      </div>      
+      <div class="col-lg-9">
          <h3><a href="">Edit Article</a></h3>
          <hr>
          @if (count($errors) > 0)
@@ -63,9 +66,6 @@
 
       </div>
       <!-- Blog Sidebar Widgets Column -->
-      <div class="col-md-4 right-sidebar">
-        @include('sidebar')
-      </div>
    </div>
 </div>
   <script>

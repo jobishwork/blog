@@ -2,10 +2,10 @@
 		<div class="well" style="padding:5px;">
 
          <ul class="list-group" style="margin-bottom:0px;">
-            <li class="list-group-item"> <a href="">Home</a> </li>
-            <li class="list-group-item"> <a href=""> New Articles </a> </li>
-            <li class="list-group-item"> <a href=""> Top Articles </a> </li>
-            <li class="list-group-item"> <a href=""> Saved Articles </a> </li>
+            <li class="list-group-item"> <a href="{{url('.')}}">Home</a> </li>
+            <li class="list-group-item"> <a href="{{url('.')}}"> New Articles </a> </li>
+            <li class="list-group-item"> <a href="{{url('.')}}"> Top Articles </a> </li>
+            <li class="list-group-item"> <a href="{{url('.')}}"> Saved Articles </a> </li>
          </ul>
 
 <!-- 			<form method="post" action="{{url('blog/search')}}">

@@ -18,7 +18,7 @@
       <div class="infinite-scroll">
             @foreach($posts as $post_array)
             <h3><a href="{{url('blog/'.$post_array->id)}}">{{$post_array->title}}</a></h3>
-            <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($post_array->created_at))}} by <a href="{{url('blog/user/'.$post_array->user->id)}}">{{$post_array->user->name}}</a></i></p>
+            <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($post_array->created_at))}} by <a href="{{url('blog/user/'.$post_array->user->id)}}">{{$post_array->user->name}}</a> <a class="btn btn-default btn-xs" href="">Follow</a> </i></p>
             <p>
                @if($post_array->is_locked)
                   {{$post_array->introduction}}
@@ -30,9 +30,12 @@
                   {!! nl2br(e($post_array->post)) !!}
                @endIf
             </p>
-            @foreach($post_array->categories as $category_array)
-            <a href="{{url('blog/category/'.$category_array->id)}}" class="btn btn-default btn-xs">{{$category_array->category}}</a>
-            @endforeach
+            <div class="row">                
+                  <div class="col-md-12"  style="margin-top:8px;">
+                            <a href="" class="btn btn-primary btn-xs">Save</a>
+                            <a href="" class="btn btn-danger btn-xs">Report</a>
+                  </div>
+            </div>
             <hr>
             @endforeach
             <div align="center">
