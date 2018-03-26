@@ -27,6 +27,7 @@ Route::post('blog/comment/{blog}', 'BlogController@comment');
 Route::resource('blog', 'BlogController');
 Route::get('post/{id}/destroy', 'BlogController@destroy');
 
+Route::get('saved_articles', 'BlogController@savedArticles');
 Route::get('topArticles', 'BlogController@topArticles');
 Route::get('newArticles', 'BlogController@index');
 Route::get('saveArticle/{id}', 'BlogController@saveArticle');

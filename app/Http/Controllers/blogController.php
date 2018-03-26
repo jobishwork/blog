@@ -24,9 +24,10 @@ class BlogController extends Controller
         if (Auth::user())
         {
             $user = Auth::user();
-            return $saved_articles = $user->savedArticles()->get()->toArray();
+            $saved_articles = $user->savedArticles()->get()->toArray();
+            $saved_ids = array_pluck( $saved_articles, 'id' );
             $posts = Post::orderBy('created_at','desc')->paginate(5);
-            return view('list',compact('posts','saved_articles'));
+            return view('list',compact('posts','saved_ids'));
         }
         else
         {
@@ -175,29 +176,37 @@ class BlogController extends Controller
         return view('list',compact('posts','page_title'));
     }
 
+    public function savedArticles()
+    {
+        $user = Auth::user();
+        $posts = $user->savedArticles()->orderBy('id','desc')->paginate(5);
+        $saved_ids = array_pluck( $posts, 'id' );
+        return view('list',compact('posts','saved_ids'));
+    }
+
     public function topArticles()
     {
+        $user = Auth::user();
+        $user->savedArticles()->get()->pluck('id');
         $posts = Post::orderBy('view_count','desc')->paginate(5);
         return view('list',compact('posts'));
     }
 
     public function saveArticle($id)
     {
-// return $id;
-        $post = Post::find($id);
         $user = Auth::user();
-        // return $post->savedArticles()->get()->first()->pivot;
-        // return $saved = $post->savedArticles()->get();
-        return $user->savedArticles()->get();
-        foreach ($saved as $s)
+        $post = Post::find($id);
+        $saved_articles = $user->savedArticles()->get()->toArray();
+        $saved_ids = array_pluck( $saved_articles, 'id' );
+        if(in_array($id, $saved_ids))
         {
-            return $s->pivot->user_id;
+            $user->savedArticles()->detach($post);
         }
-
-
-
-        // $post->savedArticles()->attach($user);
-        //$user->savedArticles()->attach($post);
+        else
+        {
+            // $post->savedArticles()->attach($user);
+            $user->savedArticles()->attach($post);
+        }
 
         return back();
     }

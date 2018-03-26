@@ -43,13 +43,24 @@
             <h4>Leave a Comment:</h4>
             <form role="form">
                <div class="form-group">
-                  <textarea class="form-control" disabled rows="3" placeholder="Please login or register to post commenets."></textarea>
+                    <textarea class="form-control" disabled rows="3" placeholder="Please login or register to post commenets."></textarea>
                </div>
                <a href="{{url('login')}}" class="btn btn-primary">Login</a>
                <a href="{{url('register')}}" class="btn btn-primary">Register</a>
             </form>
          </div>
          @endif
+        <h4>
+            Comments(
+            <small>
+            @if(count($comments) == 1)
+                {{count($comments)}} Comment
+            @else
+                {{count($comments)}} Comments
+            @endif
+            </small>
+            )
+        </h4>
 
          @if(count($comments))
 
@@ -61,13 +72,10 @@
                </div>
             </div>
             @endforeach
-
           @else
-
                <div class="media">
                   <i>No comments found.</i>
                </div>
-
           @endif
 
       </div>

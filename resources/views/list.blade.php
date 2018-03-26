@@ -15,7 +15,7 @@
          @endIf
 
          @if(count($posts))
-      <div class="infinite-scroll">
+        <div class="infinite-scroll">
             @foreach($posts as $post_array)
             <h3><a href="{{url('blog/'.$post_array->id)}}">{{$post_array->title}}</a></h3>
             <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($post_array->created_at))}} by <a href="{{url('blog/user/'.$post_array->user->id)}}">{{$post_array->user->name}}</a> <a class="btn btn-default btn-xs" href="">Follow</a> </i></p>
@@ -33,17 +33,21 @@
             <div class="row">
             <div class="col-md-12"  style="margin-top:8px;">
                 <a href="" class="btn btn-default btn-xs">{{$post_array->view_count}} views</a>
+                @if($post_array->comments->count() == 1)
+                    <a href="{{url('blog/'.$post_array->id)}}" class="btn btn-default btn-xs">{{$post_array->comments->count()}} Comment</a>
+                @else
+                    <a href="{{url('blog/'.$post_array->id)}}" class="btn btn-default btn-xs">{{$post_array->comments->count()}} Comments</a>
+                @endif
+
                 @if (Auth::guest())
                     <a class="btn btn-primary btn-xs"  href="{{ url('/login?ref=save') }}">Save</a>
                 @else
                     <a href="{{ url('saveArticle/'.$post_array->id) }}" class="btn btn-primary btn-xs">
-                        @foreach($saved_articles as $saved_article)
-                          @if($saved_article->pivot->post_id == $post_array->id)
+                        @if(in_array($post_array->id, $saved_ids))
                             Saved
-                          @else
+                        @else
                             Save
-                          @endif
-                        @endforeach
+                        @endif
                     </a>
                 @endif
                 <a href="" class="btn btn-danger btn-xs">Report</a>
