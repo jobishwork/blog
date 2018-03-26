@@ -43,7 +43,7 @@
                     <a class="btn btn-primary btn-xs"  href="{{ url('/login?ref=save') }}">Save</a>
                 @else
                     <a href="{{ url('saveArticle/'.$post_array->id) }}" class="btn btn-primary btn-xs">
-                        @if(in_array($post_array->id, $saved_ids))
+                        @if($saved_ids && (in_array($post_array->id, $saved_ids)))
                             Saved
                         @else
                             Save

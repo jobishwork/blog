@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->text('post');
             $table->tinyInteger('is_locked')->default(0);
             $table->boolean('status');
+            $table->integer('view_count')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

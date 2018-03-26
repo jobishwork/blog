@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateViewCountTable extends Migration
+class CreateViewCountsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateViewCountTable extends Migration
      */
     public function up()
     {
-        Schema::create('view_count', function (Blueprint $table) {
+        Schema::create('view_counts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('post_id')->unsigned();
             $table->integer('count');

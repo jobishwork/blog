@@ -162,18 +162,45 @@ class BlogController extends Controller
 
     public function category($id)
     {
-        $category = Category::find($id);
-        $page_title = "Articles of category '$category->category'";
-        $posts = $category->posts()->orderBy('created_at','desc')->paginate(5);
-        return view('list',compact('posts','page_title'));
+        if (Auth::user())
+        {
+            $user = Auth::user();
+            $saved_articles = $user->savedArticles()->get()->toArray();
+            $saved_ids = array_pluck( $saved_articles, 'id' );
+
+            $category = Category::find($id);
+            $page_title = "Articles of category '$category->category'";
+            $posts = $category->posts()->orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts','page_title','saved_ids'));
+        }
+        else
+        {
+            $category = Category::find($id);
+            $page_title = "Articles of category '$category->category'";
+            $posts = $category->posts()->orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts','page_title'));
+        }        
     }
 
     public function user($id)
     {
-        $user = user::find($id);
-        $page_title = "Created by '$user->name'";
-        $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
-        return view('list',compact('posts','page_title'));
+        if (Auth::user())
+        {
+            $user = user::find($id);
+            $page_title = "Created by '$user->name'";
+            $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
+            $user = Auth::user();
+            $saved_articles = $user->savedArticles()->get()->toArray();
+            $saved_ids = array_pluck( $saved_articles, 'id' );
+            return view('list',compact('posts','page_title','saved_ids'));
+        }
+        else
+        {
+            $user = user::find($id);
+            $page_title = "Created by '$user->name'";
+            $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts','page_title'));
+        }
     }
 
     public function savedArticles()
@@ -186,10 +213,20 @@ class BlogController extends Controller
 
     public function topArticles()
     {
-        $user = Auth::user();
-        $user->savedArticles()->get()->pluck('id');
-        $posts = Post::orderBy('view_count','desc')->paginate(5);
-        return view('list',compact('posts'));
+        if (Auth::user())
+            {
+            $user = Auth::user();
+            $saved_articles = $user->savedArticles()->get()->toArray();
+            $saved_ids = array_pluck( $saved_articles, 'id' );
+            $posts = Post::orderBy('view_count','desc')->paginate(5);
+            return view('list',compact('posts','saved_ids'));         
+            }
+        else
+        {
+            $posts = Post::orderBy('view_count','desc')->paginate(5);
+            return view('list',compact('posts'));
+        }
+        
     }
 
     public function saveArticle($id)
@@ -250,3 +287,14 @@ class BlogController extends Controller
         return $messages = ['categories.required' => 'One or more categories required.'];
     }
 }
+
+
+
+
+
+
+// $saved_ids = [];
+//         $user = user::find($id);
+//         $page_title = "Created by '$user->name'";
+//         $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
+//         return view('list',compact('posts','page_title','saved_ids'));
