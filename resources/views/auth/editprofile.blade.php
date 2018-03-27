@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Edit Profile</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('profile/update/'.$user->id) }}">
+                    <form class="form-horizontal" enctype="multipart/form-data" role="form" method="POST" action="{{ url('profile/update/'.$user->id) }}">
                         {{ csrf_field() }}
                         @if(Session::has('success'))
                             <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{!! Session::get('success') !!}</p>
@@ -37,6 +37,24 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('profile_photo') ? ' has-error' : '' }}">
+                            <label for="profile_photo" class="col-md-4 control-label">Profile Photo</label>
+                            <div class="col-md-6">
+                                <input id="profile_photo" type="file" class="form-control" name="profile_photo">
+                                <br>
+                                @if($user->profile_photo)
+                                <img width="100" src="{{ url('files/user/profile_photo/resized/'.$user->profile_photo) }}">
+                                @endif
+
+                                @if ($errors->has('profile_photo'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('profile_photo') }}</strong>
+                                    </span>
+                                @endif
+
                             </div>
                         </div>
 

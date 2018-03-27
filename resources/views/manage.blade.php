@@ -14,6 +14,7 @@
           <tr>
             <th width="70%">Title</th>
             <th>Locked</th>
+            <th>Credits Required</th>
             <th>Created date</th>
             <th>Edit</th>
           </tr>
@@ -28,13 +29,14 @@
               @else
                 <td align="center">No</td>
               @endif
+              <td align="center">{{$post_array->credits_required}}</td>
               <td>{{date('d M Y',strtotime($post_array->created_at))}}</td>
               <td><a href="{{url("blog/$post_array->id/edit")}}">Edit</a></td>
             </tr>
           @endForeach
         @else
             <tr>
-              <td colspan="3"><i>No records found.</i></td>
+              <td align="center"><i>No records found.</i></td>
             </tr>
         @endIF
         <tr>

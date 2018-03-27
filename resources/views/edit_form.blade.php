@@ -5,7 +5,7 @@
       <!-- Blog Post Content Column -->
       <div class="col-md-3 right-sidebar">
          @include('sidebar')
-      </div>      
+      </div>
       <div class="col-lg-9">
          <h3><a href="">Edit Article</a></h3>
          <hr>
@@ -36,9 +36,9 @@
                </select>
             </div>
 
-           <div class="form-group" id="introductionContainer" @if(!(int)$post->is_locked) style="display: none" @endif>
-               <label for="introduction">Introduction</label>
-               <textarea rows="3" name="introduction" class="form-control">{{$post->introduction}}</textarea>
+           <div class="form-group" id="creditsContainer" @if(!(int)$post->is_locked) style="display: none" @endif>
+               <label for="credits_required">Credits required to unlock</label>
+               <input type="number" id="credits_required"  name="credits_required" class="form-control" @if($post->credits_required > 0) value="{{$post->credits_required}}" @endif placeholder="Enter Credits">
             </div>
 
            <div class="form-group">
@@ -72,9 +72,9 @@
          function LockStatusChanged(value)
          {
             if(parseInt(value))
-               $('#introductionContainer').show();
+               $('#creditsContainer').show();
             else
-               $('#introductionContainer').hide();
+               $('#creditsContainer').hide();
          }
       </script>
 @endsection

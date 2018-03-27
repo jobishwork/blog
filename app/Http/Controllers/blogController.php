@@ -55,13 +55,21 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, $this->validationRules(), $this->customErrorMessages());
 
         $post = new Post;
         $post->title = $request->title;
-        $post->introduction = $request->introduction;
-        $post->post = $request->post;
         $post->is_locked = $request->is_locked;
+        if ($request->is_locked)
+        {
+            $post->credits_required = $request->credits_required;
+        }
+        else
+        {
+            $post->credits_required = 0;
+        }
+        $post->post = $request->post;
         $post->status = $request->status;
         $post->user_id = Auth::user()->id;
         $post->save();
@@ -97,9 +105,20 @@ class BlogController extends Controller
         $count = $blog->view_count;
         $blog->view_count = $count + 1;
         $blog->save();
+        if (Auth::user())
+        {
+            $user = Auth::user();
+            $saved_articles = $user->savedArticles()->get()->toArray();
+            $saved_ids = array_pluck( $saved_articles, 'id' );
 
-        $comments = $blog->comments;
-        return view('view',compact('blog','comments'));
+            $comments = $blog->comments;
+            return view('view',compact('blog','comments','saved_ids'));
+        }
+        else
+        {
+            $comments = $blog->comments;
+            return view('view',compact('blog','comments'));
+        }
     }
 
     /**
@@ -131,9 +150,16 @@ class BlogController extends Controller
     {
         $this->validate($request, $this->validationRules(), $this->customErrorMessages());
         $blog->title = $request->title;
-        $blog->introduction = $request->introduction;
-        $blog->post = $request->post;
         $blog->is_locked = $request->is_locked;
+        if ($request->is_locked)
+        {
+            $blog->credits_required = $request->credits_required;
+        }
+        else
+        {
+            $blog->credits_required = 0;
+        }
+        $blog->post = $request->post;
         $blog->status = $request->status;
         $blog->save();
         $blog->categories()->sync($request->categories);
@@ -179,7 +205,7 @@ class BlogController extends Controller
             $page_title = "Articles of category '$category->category'";
             $posts = $category->posts()->orderBy('created_at','desc')->paginate(5);
             return view('list',compact('posts','page_title'));
-        }        
+        }
     }
 
     public function user($id)
@@ -219,14 +245,14 @@ class BlogController extends Controller
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
             $posts = Post::orderBy('view_count','desc')->paginate(5);
-            return view('list',compact('posts','saved_ids'));         
+            return view('list',compact('posts','saved_ids'));
             }
         else
         {
             $posts = Post::orderBy('view_count','desc')->paginate(5);
             return view('list',compact('posts'));
         }
-        
+
     }
 
     public function saveArticle($id)
@@ -276,7 +302,7 @@ class BlogController extends Controller
     {
         return $rules = [
                 'title' => 'required',
-                'introduction' => 'max:500',
+                'credits_required' => 'required_if:is_locked,1',
                 'post' => 'required',
                 'categories' => 'required',
             ];
@@ -284,17 +310,9 @@ class BlogController extends Controller
 
     public function customErrorMessages()
     {
-        return $messages = ['categories.required' => 'One or more categories required.'];
+        return $messages = [
+            'categories.required' => 'One or more categories required.',
+            'credits_required.required_if' => 'The Credits field is required. '
+    ];
     }
 }
-
-
-
-
-
-
-// $saved_ids = [];
-//         $user = user::find($id);
-//         $page_title = "Created by '$user->name'";
-//         $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
-//         return view('list',compact('posts','page_title','saved_ids'));

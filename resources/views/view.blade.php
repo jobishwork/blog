@@ -23,9 +23,7 @@
                     <a href="" class="btn btn-danger btn-xs">Report</a>
                 </div>
             </div>
-
          <hr>
-
 
          @if(Auth::check())
          <div class="well">

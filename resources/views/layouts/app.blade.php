@@ -38,19 +38,17 @@
         </form>
         </div>
                <ul class="nav navbar-nav navbar-right">
-
-
-
-
                   @if (Auth::guest())
-
-                  <li><a  href="{{ url('/login?ref=add-post') }}">Add Article</a></li>
-                  <li><a href="{{ url('/login') }}">Login</a></li>
-                  <li><a href="{{ url('/register') }}">Register</a></li>
+                      <li><a  href="{{ url('/login?ref=add-post') }}">Add Article</a></li>
+                      <li><a href="{{ url('/login') }}">Login</a></li>
+                      <li><a href="{{ url('/register') }}">Register</a></li>
                   @else
-                  <li> <a style="background-color:#11998e;color:#fff;margin:0px;" href="">140 Credits Avaible</a> </li>
-                  <li><a href="{{ url('/blog/create') }}">Add Article</a></li>
-                  <li><a href="{{ url('/blog/manage') }}">Manage My Articles</a></li>
+                      <li> <a style="background-color:#11998e;color:#fff;margin:0px;" href="">140 Credits Avaible</a> </li>
+                      <li><a href="{{ url('/blog/create') }}">Add Article</a></li>
+                      <li><a href="{{ url('/blog/manage') }}">Manage My Articles</a></li>
+                  @if(Auth::user()->profile_photo)
+                      <li><img style="margin-top:10" align="bottom" alt="User Image" class="img-circle" width="30" height="30" src="{{ url('files/user/profile_photo/resized/'.Auth::user()->profile_photo) }}"></li>
+                  @endif
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                         {{ Auth::user()->name }} <span class="caret"></span>

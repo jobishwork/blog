@@ -17,9 +17,9 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('title');
-            $table->text('introduction')->nullable();
             $table->text('post');
             $table->tinyInteger('is_locked')->default(0);
+            $table->integer('credits_required')->default(0);
             $table->boolean('status');
             $table->integer('view_count')->default(0);
             $table->timestamps();

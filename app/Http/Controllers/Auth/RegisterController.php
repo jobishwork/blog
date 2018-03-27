@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Session;
+use Image;
 use DB;
 
 class RegisterController extends Controller
@@ -90,6 +91,7 @@ class RegisterController extends Controller
         $this->validate($request, [
                 'name' => 'required|string|max:100',
                 'email' => 'required|email|max:255|unique:users,email,'.$id,
+                'profile_photo' => 'image|mimes:jpeg,png,jpg',
           ]);
 
         DB::transaction(function () use ($request, $id)
@@ -97,6 +99,26 @@ class RegisterController extends Controller
                 $user = User::find($id);
                 $user->name = $request->name;
                 $user->email = $request->email;
+                if($request->profile_photo)
+                    {
+                        $photo_name = rand(1,9999).time().'.'.$request->profile_photo->getClientOriginalExtension();
+                        $request->profile_photo->move(public_path('files/user/profile_photo/uploads'), $photo_name);
+                        Image::make(public_path('files/user/profile_photo/uploads/'.$photo_name))
+                                                                    ->resize(600, null, function ($constraint) {
+                                                                            $constraint->aspectRatio();
+                                                                    })->save('files/user/profile_photo/resized/'.$photo_name);
+                        Image::make(public_path('files/user/profile_photo/uploads/'.$photo_name))
+                                                                    ->fit(82, 84)
+                                                                    ->save('files/user/profile_photo/thumb/'.$photo_name);
+                        unlink('files/user/profile_photo/uploads/'.$photo_name);
+                        if($user->profile_photo)
+                        {
+                            unlink('files/user/profile_photo/resized/'.$user->profile_photo);
+                            unlink('files/user/profile_photo/thumb/'.$user->profile_photo);
+                        }
+
+                        $user->profile_photo = $photo_name;
+                    }
                 $user->save();
             });
         Session::flash('success', 'Profile has been updated successfully.');

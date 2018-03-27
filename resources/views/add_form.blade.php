@@ -25,7 +25,7 @@
             {{ csrf_field() }}
             <div class="form-group">
                <label for="title">Title</label>
-               <input type="text" autofocus="" name="title" class="form-control" value="{{old('title')}}" id="title">
+               <input type="text" autofocus="" placeholder="Enter Title" name="title" class="form-control" value="{{old('title')}}" id="title">
             </div>
             <div class="form-group">
                <label for="status">Locked Article?</label>
@@ -34,9 +34,9 @@
                   <option @if(old('is_locked') === '1') selected @endIF value="1">Yes</option>
                </select>
             </div>
-            <div class="form-group" id="introductionContainer" @if(!old('is_locked')) style="display: none" @endIF>
-               <label for="introduction">Introduction</label>
-               <textarea rows="3" name="introduction" id="introduction" class="form-control">{{old('introduction')}}</textarea>
+            <div class="form-group" id="creditsContainer" @if(!old('is_locked')) style="display: none" @endIF>
+               <label for="credits_required">Credits required to unlock</label>
+               <input type="number" id="credits_required"  name="credits_required" class="form-control" value="{{old('credits_required')}}" placeholder="Enter Credits">
             </div>
             <div class="form-group">
                <label for="post">Article</label>
@@ -69,9 +69,9 @@
          function LockStatusChanged(value)
          {
             if(parseInt(value))
-               $('#introductionContainer').show();
+               $('#creditsContainer').show();
             else
-               $('#introductionContainer').hide();
+               $('#creditsContainer').hide();
          }
       </script>
 @endsection
