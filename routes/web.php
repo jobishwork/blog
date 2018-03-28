@@ -29,7 +29,7 @@ Route::get('post/{id}/destroy', 'BlogController@destroy');
 
 Route::get('saved_articles', 'BlogController@savedArticles');
 Route::get('topArticles', 'BlogController@topArticles');
-Route::get('newArticles', 'BlogController@index');
+Route::get('newArticles', 'BlogController@newArticles');
 Route::get('saveArticle/{id}', 'BlogController@saveArticle');
 
 Route::get('password/change','Auth\ResetPasswordController@changeForm');
@@ -42,3 +42,5 @@ Route::get('tags', 'TagController@index');
 Route::get('favorite', 'FavoriteController@index');
 Route::get('notification', 'NotificationController@index');
 Route::get('settings', 'Auth\ResetPasswordController@changeForm');
+
+Route::get('following/{id}', 'FollowerController@store');

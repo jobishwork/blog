@@ -237,6 +237,23 @@ class BlogController extends Controller
         return view('list',compact('posts','saved_ids'));
     }
 
+    public function newArticles()
+    {
+        if (Auth::user())
+        {
+            $user = Auth::user();
+            $saved_articles = $user->savedArticles()->get()->toArray();
+            $saved_ids = array_pluck( $saved_articles, 'id' );
+            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts','saved_ids'));
+        }
+        else
+        {
+            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts'));
+        }
+    }
+
     public function topArticles()
     {
         if (Auth::user())

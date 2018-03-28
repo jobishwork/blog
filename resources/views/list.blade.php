@@ -7,12 +7,19 @@
       </div>
       <div class="col-lg-9">
          @if(Session::has('message'))
-         <p class="alert alert-success">{{ Session::get('message') }}</p>
+            <p class="alert alert-success">{{ Session::get('message') }}</p>
          @endif
          @if(isset($page_title))
-         <p class="info" style="font-weight: bold;">{{$page_title}}</p>
-         <hr class="info">
+             <p class="info" style="font-weight: bold;">{{$page_title}}</p>
+             <hr class="info">
          @endIf
+
+        @php
+            $following_ids = [];
+        if(Auth::user())
+            $following_ids = Auth::user()->followings()->pluck('following_id')->toArray();
+        @endphp
+
 
          @if(count($posts))
         <div class="infinite-scroll">
@@ -25,7 +32,21 @@
                 <span class="glyphicon glyphicon-time"></span>
                 <i>Created on {{date('F d, Y',strtotime($post_array->created_at))}} by
                     <a href="{{url('blog/user/'.$post_array->user->id)}}">{{$post_array->user->name}}</a>
-                    <a class="btn btn-default btn-xs" href="">Follow</a>
+                    @if (Auth::guest())
+                        <a class="btn btn-default btn-xs" href="{{ url('/login?ref=follow') }}">Follow</a>
+                    @elseif($post_array->user->id != Auth::User()->id)
+
+                        @if($following_ids && in_array($post_array->user->id, $following_ids))
+                        <a class="btn btn-default btn-xs" href="{{ url('following/'.$post_array->user->id) }}">
+                            Following
+                        </a>
+                        @else
+                        <a class="btn btn-default btn-xs" href="{{ url('following/'.$post_array->user->id) }}">
+                            Follow
+                        </a>
+                        @endif
+                    @endif
+
                 </i>
             </p>
             <p>

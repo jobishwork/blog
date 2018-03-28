@@ -32,4 +32,5 @@ class Post extends Model
     {
         return $this->BelongsToMany("App\User","saved_articles");
     }
+
 }
