@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea', branding:false });</script>
 <div class="container">
    <div class="row">
       <!-- Blog Post Content Column -->
@@ -40,7 +42,8 @@
             </div>
             <div class="form-group">
                <label for="post">Article</label>
-               <textarea rows="6" name="post" class="form-control">{{old('post')}}</textarea>
+
+               <textarea rows="6" name="post" id="post" class="form-control">{{old('post')}}</textarea>
             </div>
             <div class="form-group">
                <label for="categories">Categories</label>
