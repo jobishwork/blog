@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
-  <script>tinymce.init({ selector:'textarea', branding:false });</script>
 <div class="container">
    <div class="row">
       <!-- Blog Post Content Column -->
