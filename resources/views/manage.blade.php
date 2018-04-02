@@ -2,8 +2,12 @@
 @section('content')
 <div class="container">
   <div class="row">
+    <!-- Blog Sidebar Widgets Column -->
+    <div class="col-md-3 right-sidebar">
+      @include('sidebar')
+    </div>
     <!-- Blog Post Content Column -->
-    <div class="col-lg-8">
+    <div class="col-lg-9">
       <h3><a href="">My Articles</a></h3>
       <hr>
       @if(Session::has('message'))
@@ -42,10 +46,6 @@
         </tr>
         </tbody>
       </table>
-    </div>
-    <!-- Blog Sidebar Widgets Column -->
-    <div class="col-md-4 right-sidebar">
-      @include('sidebar')
     </div>
   </div>
 </div>

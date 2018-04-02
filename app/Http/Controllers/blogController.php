@@ -27,8 +27,17 @@ class BlogController extends Controller
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
             $following_ids = $user->following->pluck('id')->toArray();
+            if ($following_ids)
+            {
+                $followig_users = true;
+            }
+            else
+            {
+                $followig_users = false;
+            }
+
             $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
-            return view('list',compact('posts','saved_ids'));
+            return view('list',compact('posts','saved_ids','followig_users'));
         }
         else
         {

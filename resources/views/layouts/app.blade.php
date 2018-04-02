@@ -59,6 +59,8 @@
                         <li><a href="{{ url('/favorite') }}">My favorite</a></li>
                         <li><a href="{{ url('/notification') }}">Notification</a></li>
                         <li><a href="{{ url('/settings') }}">Settings</a></li>
+                        <li><a href="{{ url('/my_followers') }}">My Followers</a></li>
+                        <li><a href="{{ url('/my_followings') }}">My Followings</a></li>
                         <li>
                            <a href="{{ url('/logout') }}"
                               onclick="event.preventDefault();

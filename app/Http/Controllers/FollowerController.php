@@ -82,6 +82,21 @@ class FollowerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function myFollowers()
+    {
+        $user = Auth::User();
+        $followers = $user->followers()->paginate(10);
+        return view('my_followers',compact('followers'));
+    }
+
+    public function myFollowings()
+    {
+        $user = Auth::User();
+        $followings = $user->following()->paginate(10);
+        return view('my_followings',compact('followings'));
+    }
+
     public function edit($id)
     {
         //
@@ -110,6 +125,3 @@ class FollowerController extends Controller
         //
     }
 }
-
-
-// $following_ids = Auth::user()->followings()->pluck('following_id')->toArray();

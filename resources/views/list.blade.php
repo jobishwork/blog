@@ -20,7 +20,6 @@
             $following_ids = Auth::user()->following->pluck('id')->toArray();
         @endphp
 
-
          @if(count($posts))
         <div class="infinite-scroll">
             @foreach($posts as $post_array)
@@ -79,6 +78,7 @@
                         @endif
                     </a>
                 @endif
+
                 <a href="" class="btn btn-danger btn-xs">Report</a>
             </div>
             </div>
@@ -93,7 +93,17 @@
             </div>
          </div>
          @else
-            <div class="no-records"><i><h5>No records found.</h5></i></div>
+            @if (isset($followig_users) && $followig_users==false)
+                <div class="no-records">
+                    <i>
+                        <h4 style="color:Maroon">
+                            You have not following any Authors. Please go to <a href="{{url('topArticles')}}">Top Atricles</a>
+                        </h4>
+                    </i>
+                </div>
+            @else
+                <div class="no-records"><i><h5>No records found.</h5></i></div>
+            @endif
          @endIf
       </div>
    </div>

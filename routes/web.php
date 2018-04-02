@@ -44,3 +44,6 @@ Route::get('notification', 'NotificationController@index');
 Route::get('settings', 'Auth\ResetPasswordController@changeForm');
 
 Route::get('following/{id}', 'FollowerController@store');
+Route::get('my_followers', 'FollowerController@myFollowers');
+Route::get('my_followings', 'FollowerController@myFollowings');
+
