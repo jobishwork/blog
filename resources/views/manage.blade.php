@@ -14,8 +14,7 @@
           <tr>
             <th width="70%">Title</th>
             <th>Locked</th>
-            <th>Credits Required</th>
-            <th>Created date</th>
+            <th>date</th>
             <th>Edit</th>
           </tr>
         </thead>
@@ -29,7 +28,6 @@
               @else
                 <td align="center">No</td>
               @endif
-              <td align="center">{{$post_array->credits_required}}</td>
               <td>{{date('d M Y',strtotime($post_array->created_at))}}</td>
               <td><a href="{{url("blog/$post_array->id/edit")}}">Edit</a></td>
             </tr>
