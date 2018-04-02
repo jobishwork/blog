@@ -26,7 +26,8 @@ class BlogController extends Controller
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
-            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            $following_ids = $user->following->pluck('id')->toArray();
+            $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             return view('list',compact('posts','saved_ids'));
         }
         else
@@ -55,7 +56,6 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, $this->validationRules(), $this->customErrorMessages());
 
         $post = new Post;
@@ -330,6 +330,6 @@ class BlogController extends Controller
         return $messages = [
             'categories.required' => 'One or more categories required.',
             'credits_required.required_if' => 'The Credits field is required. '
-    ];
+        ];
     }
 }

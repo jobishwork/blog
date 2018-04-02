@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Follower;
+use App\User;
 use Auth;
 use Session;
 use DB;
@@ -42,21 +42,23 @@ class FollowerController extends Controller
      */
     public function store($id)
     {
-        // return $follower = Follower::where('following_id',$id)->get();
+        // $user = Auth::User();
+        // return $user->following->pluck('id');
+        // return Auth::User()->followers;
+        // $user = User::find(3);
+        // $user->followers()->attach(1);
+
         DB::transaction(function () use ($id)
         {
-            $following_ids = Auth::user()->followings()->pluck('following_id')->toArray();
+            $user = Auth::User();
+            $following_ids = $user->following->pluck('id')->toArray();
             if(in_array($id, $following_ids))
             {
-                // DB::table('users')->where('votes', '>', 100)->delete();
-                Follower::where('following_id',$id)->delete();
+                $user->following()->detach($id);
             }
             else
             {
-                $follower = new Follower;
-                $follower->user_id = Auth::User()->id;
-                $follower->following_id = $id;
-                $follower->save();
+                $user->following()->attach($id);
             }
 
         });
@@ -108,3 +110,6 @@ class FollowerController extends Controller
         //
     }
 }
+
+
+// $following_ids = Auth::user()->followings()->pluck('following_id')->toArray();

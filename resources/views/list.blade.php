@@ -17,7 +17,7 @@
         @php
             $following_ids = [];
         if(Auth::user())
-            $following_ids = Auth::user()->followings()->pluck('following_id')->toArray();
+            $following_ids = Auth::user()->following->pluck('id')->toArray();
         @endphp
 
 
@@ -35,7 +35,6 @@
                     @if (Auth::guest())
                         <a class="btn btn-default btn-xs" href="{{ url('/login?ref=follow') }}">Follow</a>
                     @elseif($post_array->user->id != Auth::User()->id)
-
                         @if($following_ids && in_array($post_array->user->id, $following_ids))
                         <a class="btn btn-default btn-xs" href="{{ url('following/'.$post_array->user->id) }}">
                             Following

@@ -42,8 +42,15 @@ class User extends Authenticatable
         return $this->BelongsToMany("App\Post","saved_articles");
     }
 
-    public function followings()
+    //The users those are followers of User1
+    public function followers()
     {
-        return $this->hasMany('App\Follower');
+        return $this->belongsToMany('App\User','followers','user_id','follower_id');
+    }
+
+    //User1 following these users
+    public function following()
+    {
+        return $this->belongsToMany('App\User','followers','follower_id','user_id');
     }
 }
