@@ -49,13 +49,13 @@
             </p>
             <p>
                @if($post_array->is_locked)
-                  {!! nl2br(e(str_limit($post_array->post, $limit = 500, $end = '...'))) !!}
+                  {!! str_limit($post_array->post, $limit = 500, $end = '...') !!}
                   <div align="center"><a href="" class="btn btn-primary">Unlock (40 Credits)</a></div>
                @elseif(strlen($post_array->post) > 500)
-                  {!! nl2br(e(str_limit($post_array->post, $limit = 500, $end = '...'))) !!}
+                  {!! str_limit($post_array->post, $limit = 500, $end = '...') !!}
                   <a href="{{url('blog/'.$post_array->id)}}">Read more</a>
                @else
-                  {!! nl2br(e($post_array->post)) !!}
+                  {!! $post_array->post !!}
                @endIf
             </p>
             <div class="row">
@@ -94,13 +94,12 @@
          </div>
          @else
             @if (isset($followig_users) && $followig_users==false)
-                <div class="no-records">
-                    <i>
-                        <h4 style="color:Maroon">
-                            You have not following any Authors. Please go to <a href="{{url('topArticles')}}">Top Atricles</a>
-                        </h4>
-                    </i>
-                </div>
+            <div class="infinite-scroll">            
+              <div style="margin-top:20px;" class="well">
+                <p> This page shows posts from authors you follow. Please start to follow authors to get updates. </p>
+                <p> Most popular authors are listed below. </p>
+              </div>
+            </div>  
             @else
                 <div class="no-records"><i><h5>No records found.</h5></i></div>
             @endif

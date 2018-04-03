@@ -43,7 +43,7 @@
 
            <div class="form-group">
              <label for="post">Article</label>
-             <textarea rows="6" name="post" class="form-control">{{$post->post}}</textarea>
+             <textarea rows="6" name="post" class="form-control editor">{{$post->post}}</textarea>
            </div>
            <div class="form-group">
              <label for="categories">Categories</label>

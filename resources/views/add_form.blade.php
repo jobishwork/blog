@@ -41,7 +41,7 @@
             <div class="form-group">
                <label for="post">Article</label>
 
-               <textarea rows="6" name="post" id="post" class="form-control">{{old('post')}}</textarea>
+               <textarea rows="6" name="post" id="post" class="form-control editor">{{old('post')}}</textarea>
             </div>
             <div class="form-group">
                <label for="categories">Categories</label>

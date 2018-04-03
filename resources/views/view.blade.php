@@ -9,7 +9,7 @@
       <div class="col-lg-9">
          <h3><a href="">{{$blog->title}}</a></h3>
          <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a> <a class="btn btn-default btn-xs" href="">Follow</a></i></p>
-         {!! nl2br(e($blog->post)) !!}
+         {!! $blog->post !!}
          <br><br>
 
             @foreach($blog->categories as $category_array)

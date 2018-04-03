@@ -119,7 +119,7 @@
 
   <script src="{{url('js/tinymce/tinymce.min.js')}}"></script>
   <script>tinymce.init({
-  selector: 'textarea',
+  selector: '.editor',
   height: 200,
   menubar: false,
   branding:false,
