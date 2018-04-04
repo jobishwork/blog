@@ -51,5 +51,7 @@ Route::get('my_followings', 'FollowerController@myFollowings');
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 
+Route::post('favorite_category', 'FavoriteCategoryController@store');
+
 
 
