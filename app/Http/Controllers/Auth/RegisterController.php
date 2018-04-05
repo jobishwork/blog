@@ -83,7 +83,7 @@ class RegisterController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('Auth\editprofile',compact('user'));
+        return view('auth.editprofile',compact('user'));
     }
 
     public function update(Request $request, $id)

@@ -34,13 +34,15 @@ class BlogController extends Controller
             else
             {
                 $followig_users = false;
-                $favorites = $user->favoriteCategories()->get()->pluck('id')->toArray(); //Get the category_ids from pivot table
-                $categories = Category::get();
-                return view('favorite_categories',compact('categories','favorites'));
+                // $favorites = $user->favoriteCategories()->get()->pluck('id')->toArray(); //Get the category_ids from pivot table
+                // $categories = Category::get();
+                // return view('favorite_categories',compact('categories','favorites'));
             }
 
-            $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
-            return view('list',compact('posts','saved_ids','followig_users'));
+            // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
+            // return view('list',compact('posts','saved_ids','followig_users'));
+            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            return view('list',compact('posts','saved_ids'));
         }
         else
         {
