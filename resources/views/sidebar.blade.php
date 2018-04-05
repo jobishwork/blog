@@ -30,6 +30,9 @@
                      <a href="{{url('blog/category/'.$category_array->id)}}">{{$category_array->category}}</a>
                   </li>
                   @endforeach
+                   <li>
+                     <a href="">Test</a>
+                  </li>
                   </ul>
                </div>
             </div>
