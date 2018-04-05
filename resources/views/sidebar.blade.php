@@ -37,6 +37,21 @@
                </div>
             </div>
          </div>
+
+         <div class="well">
+            <div class="row">
+               <div class="col-lg-12">
+                  <ul style="padding-left:20px;">
+                   <li>
+                     <a href="{{url('privacy-policy')}}">Privacy Policy</a>
+                  </li>
+                   <li>
+                     <a href="{{url('terms')}}">Terms</a>
+                  </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
 <!--          <div class="well">
             <h4>Recent Articles</h4>
             <ul class="list-group">

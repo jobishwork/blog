@@ -53,5 +53,10 @@ Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallba
 
 Route::post('favorite_category', 'FavoriteCategoryController@store');
 
+Route::get('privacy-policy', function () {
+     return view('privacy_policy');
+ });
 
-
+Route::get('terms', function () {
+     return view('terms');
+ });
