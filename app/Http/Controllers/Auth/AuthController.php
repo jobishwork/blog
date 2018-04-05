@@ -19,7 +19,6 @@ class AuthController extends Controller
 
     public function handleProviderCallback($provider)
     {
-        // $user = Socialite::driver($provider)->userFromTokenAndSecret($oauth_token, $oauth_token_secret);
         $user = Socialite::driver($provider)->user();
         // echo "<pre>";
         // var_dump($user);
