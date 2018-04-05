@@ -41,6 +41,7 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany("App\Post","saved_articles");
     }
+    //comments added
 
     //The users those are followers of User1
     public function followers()
