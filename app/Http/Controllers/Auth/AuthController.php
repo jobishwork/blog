@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
 use Redirect;
 use App\User;
+use Auth;
 
 class AuthController extends Controller
 {
