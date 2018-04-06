@@ -60,3 +60,11 @@ Route::get('privacy-policy', function () {
 Route::get('terms', function () {
      return view('terms');
  });
+
+Route::get('/users/list', 'UserController@index');
+Route::get('users/edit/{id}', 'Auth\RegisterController@edit');
+
+Route::get('/transactions/list/{id}', 'TransactionController@index');
+Route::post('/transactions/add/{id}', 'TransactionController@store');
+
+

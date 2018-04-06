@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany('App\Category','favorite_categories');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany("App\Transaction");
+    }
 }

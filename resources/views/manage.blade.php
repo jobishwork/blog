@@ -9,7 +9,6 @@
     <!-- Blog Post Content Column -->
     <div class="col-lg-9">
       <h3><a href="">My Articles</a></h3>
-      <hr>
       @if(Session::has('message'))
         <p class="alert alert-warning">{{ Session::get('message') }}</p>
       @endif

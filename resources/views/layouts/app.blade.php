@@ -11,10 +11,23 @@
       <link href="{{ url('/') }}/css/select2.css" rel="stylesheet">
    </head>
    <body>
+    @php
+    if(Auth::user())
+    {
+        $old_transaction = Auth::user()->transactions()->orderBy('created_at','desc')->get()->first();
+        if ($old_transaction)
+        {
+            $balance = $old_transaction->balance;
+        }
+        else
+        {
+            $balance = 0;
+        }
+    }
+    @endphp
       <nav class="navbar navbar-default navbar-fixed-top">
          <div class="container">
             <div class="navbar-header">
-
                <a class="navbar-brand" href="{{ url('/') }}">
                   {{ config('app.name', 'Laravel') }}
                </a>
@@ -27,7 +40,6 @@
                <ul class="nav navbar-nav">
                   <li><a href="{{ url('/') }}">Home</a></li>
                </ul>
-
       <div class="col-sm-4 col-md-4">
         <form class="navbar-form" role="search">
         <div class="input-group">
@@ -44,7 +56,7 @@
                       <li><a href="{{ url('/login') }}">Login</a></li>
                       <li><a href="{{ url('/register') }}">Register</a></li>
                   @else
-                      <li> <a style="background-color:#11998e;color:#fff;margin:0px;" href="">140 Credits Avaible</a> </li>
+                      <li> <a style="background-color:#11998e;color:#fff;margin:0px;" href="">{{$balance}} Credits Avaible</a> </li>
                       <li><a href="{{ url('/blog/create') }}">Add Article</a></li>
                       <li><a href="{{ url('/blog/manage') }}">Manage My Articles</a></li>
                   @if(Auth::user()->profile_photo)
@@ -62,6 +74,9 @@
                         <li><a href="{{ url('/settings') }}">Settings</a></li>
                         <li><a href="{{ url('/my_followers') }}">My Followers</a></li>
                         <li><a href="{{ url('/my_followings') }}">My Followings</a></li>
+                        @if(Auth::user()->type == 1)
+                        <li><a href="{{ url('/users/list') }}">Users</a></li>
+                        @endif
                         <li>
                            <a href="{{ url('/logout') }}"
                               onclick="event.preventDefault();
