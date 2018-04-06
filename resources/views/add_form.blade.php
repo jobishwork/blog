@@ -35,8 +35,8 @@
                </select>
             </div>
             <div class="form-group" id="creditsContainer" @if(!old('is_locked')) style="display: none" @endIF>
-               <label for="credits_required">Credits required to unlock</label>
-               <input type="number" id="credits_required"  name="credits_required" class="form-control" value="{{old('credits_required')}}" placeholder="Enter Credits">
+               <label for="credits_required">Points required to unlock</label>
+               <input type="number" id="credits_required"  name="credits_required" class="form-control" value="{{old('credits_required')}}" placeholder="Enter Points">
             </div>
             <div class="form-group">
                <label for="post">Article</label>

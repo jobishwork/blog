@@ -37,8 +37,8 @@
             </div>
 
            <div class="form-group" id="creditsContainer" @if(!(int)$post->is_locked) style="display: none" @endif>
-               <label for="credits_required">Credits required to unlock</label>
-               <input type="number" id="credits_required"  name="credits_required" class="form-control" @if($post->credits_required > 0) value="{{$post->credits_required}}" @endif placeholder="Enter Credits">
+               <label for="credits_required">Points required to unlock</label>
+               <input type="number" id="credits_required"  name="credits_required" class="form-control" @if($post->credits_required > 0) value="{{$post->credits_required}}" @endif placeholder="Enter Points">
             </div>
 
            <div class="form-group">

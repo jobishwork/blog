@@ -50,7 +50,7 @@
             <p>
                @if($post_array->is_locked)
                   {!! str_limit($post_array->post, $limit = 500, $end = '...') !!}
-                  <div align="center"><a href="" class="btn btn-primary">Unlock (40 Credits)</a></div>
+                  <div align="center"><a href="" class="btn btn-primary">Unlock (40 Points)</a></div>
                @elseif(strlen($post_array->post) > 500)
                   {!! str_limit($post_array->post, $limit = 500, $end = '...') !!}
                   <a href="{{url('blog/'.$post_array->id)}}">Read more</a>
@@ -94,12 +94,12 @@
          </div>
          @else
             @if (isset($followig_users) && $followig_users==false)
-            <div class="infinite-scroll">            
+            <div class="infinite-scroll">
               <div style="margin-top:20px;" class="well">
                 <p> This page shows posts from authors you follow. Please start to follow authors to get updates. </p>
                 <p> Most popular authors are listed below. </p>
               </div>
-            </div>  
+            </div>
             @else
                 <div class="no-records"><i><h5>No records found.</h5></i></div>
             @endif
