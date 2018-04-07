@@ -51,11 +51,11 @@
                @if($post_array->is_locked)
                   {!! str_limit($post_array->post, $limit = 500, $end = '...') !!}
                   <div align="center"><a href="" class="btn btn-primary">Unlock (40 Points)</a></div>
-               @elseif(strlen($post_array->post) > 500)
-                  {!! str_limit($post_array->post, $limit = 500, $end = '...') !!}
+               @elseif(strlen(strip_tags($post_array->post)) > 500)
+                  {!! str_limit(strip_tags($post_array->post), $limit = 500, $end = '...') !!}
                   <a href="{{url('blog/'.$post_array->id)}}">Read more</a>
                @else
-                  {!! $post_array->post !!}
+                  {!! strip_tags($post_array->post) !!}
                @endIf
             </p>
             <div class="row">

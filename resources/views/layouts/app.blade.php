@@ -136,18 +136,21 @@
   <script src="{{url('js/tinymce/tinymce.min.js')}}"></script>
   <script>tinymce.init({
   selector: '.editor',
-  height: 200,
+  height: 300,
   menubar: false,
   branding:false,
+  paste_as_text: true,
+  relative_urls : false,
+  remove_script_host : false,
+  convert_urls : true,
+  images_upload_url: '{{url("upload-image")}}',
   plugins: [
     'advlist autolink lists link image charmap print preview anchor textcolor',
     'searchreplace visualblocks code fullscreen',
-    'insertdatetime media table contextmenu paste code help wordcount'
+    'insertdatetime media table contextmenu paste code help wordcount image'
   ],
-  toolbar: 'insert | undo redo |  formatselect | bold italic backcolor  | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-  content_css: [
-    '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
-    '//www.tinymce.com/css/codepen.min.css']
-});</script>
-   </body>
+  toolbar: 'formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image',
+  });
+  </script>
+  </body>
 </html>
