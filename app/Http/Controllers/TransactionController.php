@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaction;
+use App\Post;
 use App\User;
+use Session;
+use Auth;
+use DB;
 
 class TransactionController extends Controller
 {
@@ -16,7 +20,10 @@ class TransactionController extends Controller
     public function index($id)
     {
         $user = User::find($id);
-        $transactions = $user->transactions()->orderBy('created_at','desc')->paginate(10);
+        if ($user->transactions())
+        {
+            $transactions = $user->transactions()->orderBy('created_at','desc')->paginate(10);
+        }
         return view('transaction_list',compact('transactions','user'));
     }
 
@@ -25,9 +32,10 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $user = User::find($id);
+        return view('buy_points',compact('user'));
     }
 
     /**
@@ -38,6 +46,9 @@ class TransactionController extends Controller
      */
     public function store(Request $request,$id)
     {
+        $this->validate($request, [
+                'buy_points' => 'required|numeric',
+          ]);
         $user = User::find($id);
         $old_transaction = $user->transactions()->orderBy('created_at','desc')->get()->first();
         if ($old_transaction)
@@ -50,10 +61,50 @@ class TransactionController extends Controller
         }
         $transaction = new Transaction;
         $transaction->user_id = $id;
-        $transaction->credits = $request->add_points;
-        $transaction->balance = $request->add_points + $balance;
+        $transaction->credits = $request->buy_points;
+        $transaction->balance = $request->buy_points + $balance;
         $transaction->save();
+
+        Session::flash('message', 'Points have been bought successfully.');
         return back();
+    }
+
+    public function unlockArticle($id)
+    {
+        $post = Post::find($id);
+        return view('unlock_article',compact('post'));
+    }
+
+    public function unlockArticleAction($id)
+    {
+        $post = Post::find($id);
+        $user = Auth::User();
+        $old_transaction = $user->transactions()->orderBy('created_at','desc')->get()->first();
+        if ($old_transaction)
+        {
+            $balance = $old_transaction->balance;
+        }
+        else
+        {
+            $balance = 0;
+        }
+
+        if ($balance < $post->credits_required)
+        {
+
+            return back()->with('message', 'You have insufficient balance of points. Please buy more points ');
+        }
+        else
+        {
+            $transaction = new Transaction;
+            $transaction->user_id = $user->id;
+            $transaction->debits = $post->credits_required;
+            $transaction->balance = $balance - $post->credits_required;
+            $transaction->save();
+
+            $user->unlockedArticles()->attach($post);
+            return redirect('blog/'.$id)->with('message', 'Unlocked this article successfully');
+        }
     }
 
     /**

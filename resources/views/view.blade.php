@@ -7,8 +7,12 @@
          @include('sidebar')
       </div>
       <div class="col-lg-9">
+        @if(Session::has('message'))
+            <p class="alert alert-success">{{ Session::get('message') }}</p>
+         @endif
          <h3><a href="">{{$blog->title}}</a></h3>
          <p><span class="glyphicon glyphicon-time"></span> <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a> <a class="btn btn-default btn-xs" href="">Follow</a></i></p>
+
          {!! $blog->post !!}
          <br><br>
 

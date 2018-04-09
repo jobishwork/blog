@@ -67,6 +67,9 @@ Route::get('/users/list', 'UserController@index');
 Route::get('users/edit/{id}', 'Auth\RegisterController@edit');
 
 Route::get('/transactions/list/{id}', 'TransactionController@index');
+Route::get('points/create/{id}', 'TransactionController@create');
 Route::post('/transactions/add/{id}', 'TransactionController@store');
 
+Route::get('unlock/article/{id}', 'TransactionController@unlockArticle');
 
+Route::post('unlock/article/{id}', 'TransactionController@unlockArticleAction');

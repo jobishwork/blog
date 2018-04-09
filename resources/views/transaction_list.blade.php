@@ -11,24 +11,22 @@
         <div class="col-lg-7">
             <h3><a href="">{{$user->name}}'s Transactions</a></h3>
         </div>
+        <hr>
+        <a align:right class="btn btn-primary pull-right" href="{{ url('points/create/'.$user->id) }}">Buy Points</a>
+        @if (count($errors) > 0)
+         <div class="alert alert-danger">
+            <ul>
+               @foreach ($errors->all() as $error)
+               <li>{{ $error }}</li>
+               @endforeach
+            </ul>
+         </div>
+         @endif
       @if(Session::has('message'))
         <p class="alert alert-warning">{{ Session::get('message') }}</p>
       @endif
       <table class="table">
         <thead>
-          <tr>
-            <td colspan="3">
-            <form name="form1" method="POST" action="{{url('/transactions/add/'.$user->id)}}">
-                {{ csrf_field() }}
-            <div class="col-lg-2">
-               <h3> <input type="text" style="margin-top:10" class="form-control" placeholder="Add Points" name="add_points""></h3>
-            </div>
-            <div class="col-lg-2">
-                <h3><button type="submit" class="btn btn-primary">Add Points</button></h3>
-            </div>
-          </form>              
-            </td>
-          </tr>
           <tr>
             <th>Date</th>
             <th>Credit</th>

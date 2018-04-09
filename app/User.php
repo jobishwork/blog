@@ -64,4 +64,9 @@ class User extends Authenticatable
     {
         return $this->hasMany("App\Transaction");
     }
+
+    public function unlockedArticles()
+    {
+        return $this->BelongsToMany("App\Post","unlocked_articles");
+    }
 }

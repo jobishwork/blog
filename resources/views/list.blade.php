@@ -15,9 +15,13 @@
          @endIf
 
         @php
+            $unlocked_ids = [];
             $following_ids = [];
         if(Auth::user())
+        {
             $following_ids = Auth::user()->following->pluck('id')->toArray();
+            $unlocked_ids = Auth::user()->unlockedArticles->pluck('post_id')->toArray();
+        }
         @endphp
 
          @if(count($posts))
@@ -48,9 +52,9 @@
                 </i>
             </p>
             <p>
-               @if($post_array->is_locked)
+               @if($post_array->is_locked && !($unlocked_ids && in_array($post_array->id,$unlocked_ids)) )
                   {!! str_limit($post_array->post, $limit = 500, $end = '...') !!}
-                  <div align="center"><a href="" class="btn btn-primary">Unlock (40 Points)</a></div>
+                  <div align="center"><a href="{{ url('unlock/article/'.$post_array->id) }}" class="btn btn-primary">Unlock ({{$post_array->credits_required}} Points needed)</a></div>
                @elseif(strlen(strip_tags($post_array->post)) > 500)
                   {!! str_limit(strip_tags($post_array->post), $limit = 500, $end = '...') !!}
                   <a href="{{url('blog/'.$post_array->id)}}">Read more</a>
