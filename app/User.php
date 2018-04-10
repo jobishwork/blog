@@ -69,4 +69,14 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany("App\Post","unlocked_articles");
     }
+
+    public function sentMessages()
+    {
+        return $this->hasMany('App\Message','sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany('App\Message','receiver_id');
+    }
 }

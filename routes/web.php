@@ -69,7 +69,9 @@ Route::get('users/edit/{id}', 'Auth\RegisterController@edit');
 Route::get('/transactions/list/{id}', 'TransactionController@index');
 Route::get('points/create/{id}', 'TransactionController@create');
 Route::post('/transactions/add/{id}', 'TransactionController@store');
-
 Route::get('unlock/article/{id}', 'TransactionController@unlockArticle');
-
 Route::post('unlock/article/{id}', 'TransactionController@unlockArticleAction');
+
+Route::get('message/create/{id}', 'MessageController@create');
+Route::post('message/store/{id}', 'MessageController@store');
+Route::get('inbox', 'MessageController@inbox');

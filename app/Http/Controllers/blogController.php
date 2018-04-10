@@ -24,6 +24,7 @@ class BlogController extends Controller
     {
         if (Auth::user())
         {
+            // return $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
@@ -125,7 +126,6 @@ class BlogController extends Controller
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
-
             $comments = $blog->comments;
             return view('view',compact('blog','comments','saved_ids'));
         }
@@ -321,7 +321,7 @@ class BlogController extends Controller
 
     public function uploadImage(Request $request)
     {
-        
+
       // get current time and append the upload file extension to it,
       // then put that name to $photoName variable.
       $photoName = time().'.'.$request->file->getClientOriginalExtension();
@@ -333,7 +333,7 @@ class BlogController extends Controller
       $request->file->move(public_path('files/posts'), $photoName);
 
         $filename = $request->file;
-        
+
           return json_encode(["location"=> url("/files/posts/".$photoName)]);
 
 
@@ -360,10 +360,10 @@ class BlogController extends Controller
       //     }
       //   }
 
-        
+
       //     If your script needs to receive cookies, set images_upload_credentials : true in
       //     the configuration and enable the following two headers.
-        
+
       //   // header('Access-Control-Allow-Credentials: true');
       //   // header('P3P: CP="There is no P3P policy."');
 

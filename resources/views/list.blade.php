@@ -6,13 +6,14 @@
       @include('sidebar')
       </div>
       <div class="col-lg-9">
-         @if(Session::has('message'))
+        @if(Session::has('message'))
             <p class="alert alert-success">{{ Session::get('message') }}</p>
-         @endif
-         @if(isset($page_title))
-             <p class="info" style="font-weight: bold;">{{$page_title}}</p>
-             <hr class="info">
-         @endIf
+        @endif
+
+        @if(isset($page_title))
+            <p class="info" style="font-weight: bold;">{{$page_title}}</p>
+            <hr class="info">
+        @endIf
 
         @php
             $unlocked_ids = [];
@@ -20,7 +21,7 @@
         if(Auth::user())
         {
             $following_ids = Auth::user()->following->pluck('id')->toArray();
-            $unlocked_ids = Auth::user()->unlockedArticles->pluck('post_id')->toArray();
+            $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
         }
         @endphp
 
@@ -48,7 +49,6 @@
                         </a>
                         @endif
                     @endif
-
                 </i>
             </p>
             <p>

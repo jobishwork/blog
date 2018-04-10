@@ -74,6 +74,8 @@
                         <li><a href="{{ url('/settings') }}">Settings</a></li>
                         <li><a href="{{ url('/my_followers') }}">My Followers</a></li>
                         <li><a href="{{ url('/my_followings') }}">My Followings</a></li>
+                        <li><a href="{{ url('/inbox') }}">Inbox</a></li>
+                        <li><a href="{{ url('/sent_messages') }}">Sent Messages </a></li>
                         @if(Auth::user()->type == 1)
                         <li><a href="{{ url('/users/list') }}">Users</a></li>
                         @endif
