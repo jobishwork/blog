@@ -22,7 +22,7 @@ class TransactionController extends Controller
         $user = Auth::user();
         if ($user->transactions())
         {
-            return $transactions = $user->transactions()->orderBy('created_at','desc')->paginate(10);
+            $transactions = $user->transactions()->orderBy('id','desc')->paginate(10);
         }
         return view('transaction_list',compact('transactions'));
     }
