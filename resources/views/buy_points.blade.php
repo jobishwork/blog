@@ -28,7 +28,7 @@
         <thead>
           <tr>
             <td colspan="3">
-            <form name="form1" method="POST" action="{{url('/transactions/add/'.$user->id)}}">
+            <form name="form1" method="POST" action="{{url('/transactions/add/')}}">
                 {{ csrf_field() }}
             <div class="col-lg-2">
                <h3> <input type="text" style="margin-top:10" class="form-control" placeholder="Enter Points" name="buy_points""></h3>

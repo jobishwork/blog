@@ -17,14 +17,14 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
-        $user = User::find($id);
+        $user = Auth::user();
         if ($user->transactions())
         {
             $transactions = $user->transactions()->orderBy('created_at','desc')->paginate(10);
         }
-        return view('transaction_list',compact('transactions','user'));
+        return view('transaction_list',compact('transactions'));
     }
 
     /**
@@ -32,9 +32,9 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        $user = User::find($id);
+        $user = Auth::user();
         return view('buy_points',compact('user'));
     }
 
@@ -44,12 +44,12 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
         $this->validate($request, [
                 'buy_points' => 'required|numeric',
           ]);
-        $user = User::find($id);
+        $user = Auth::user();
         $old_transaction = $user->transactions()->orderBy('created_at','desc')->get()->first();
         if ($old_transaction)
         {
@@ -60,7 +60,7 @@ class TransactionController extends Controller
             $balance = 0;
         }
         $transaction = new Transaction;
-        $transaction->user_id = $id;
+        $transaction->user_id = $user->id;
         $transaction->credits = $request->buy_points;
         $transaction->balance = $request->buy_points + $balance;
         $transaction->save();

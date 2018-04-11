@@ -56,7 +56,7 @@
                       <li><a href="{{ url('/login') }}">Login</a></li>
                       <li><a href="{{ url('/register') }}">Register</a></li>
                   @else
-                      <li> <a style="background-color:#11998e;color:#fff;margin:0px;" href="{{url('/transactions/list/'.Auth::user()->id)}}">{{$balance}} Points Avaible</a> </li>
+                      <li> <a style="background-color:#11998e;color:#fff;margin:0px;" href="{{url('/transactions/list/')}}">{{$balance}} Points Avaible</a> </li>
                       <li><a href="{{ url('/blog/create') }}">Add Article</a></li>
                       <li><a href="{{ url('/blog/manage') }}">Manage My Articles</a></li>
                   @if(Auth::user()->profile_photo)

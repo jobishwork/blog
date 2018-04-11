@@ -9,10 +9,10 @@
     <!-- Blog Post Content Column -->
     <div class="col-lg-9">
         <div class="col-lg-7">
-            <h3><a href="">{{$user->name}}'s Transactions</a></h3>
+            <h3><a href="">{{Auth::user()->name}}'s Transactions</a></h3>
         </div>
         <hr>
-        <a align:right class="btn btn-primary pull-right" href="{{ url('points/create/'.$user->id) }}">Buy Points</a>
+        <a align:right class="btn btn-primary pull-right" href="{{ url('points/create/') }}">Buy Points</a>
         @if (count($errors) > 0)
          <div class="alert alert-danger">
             <ul>
