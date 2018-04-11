@@ -8,6 +8,11 @@ class Message extends Model
 {
     public function sender()
     {
-        return $this->hasOne('App\User','sender_id');
+        return $this->belongsTo('App\User','sender_id');
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo('App\User','receiver_id');
     }
 }

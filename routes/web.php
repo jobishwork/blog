@@ -75,3 +75,7 @@ Route::post('unlock/article/{id}', 'TransactionController@unlockArticleAction');
 Route::get('message/create/{id}', 'MessageController@create');
 Route::post('message/store/{id}', 'MessageController@store');
 Route::get('inbox', 'MessageController@inbox');
+Route::get('inbox_show/{id}', 'MessageController@inboxShow');
+Route::get('sent_messages', 'MessageController@sentMessages');
+Route::get('sent_message_show/{id}', 'MessageController@sentMessageShow');
+

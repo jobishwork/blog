@@ -57,12 +57,27 @@ class MessageController extends Controller
 
     public function inbox()
     {
-        $inboxes = User::find(Auth::user()->id);
-
-
+        $inboxes = Auth::user()->receivedMessages;
         return view('inbox',compact('inboxes'));
     }
 
+    public function inboxShow($id)
+    {
+        $message = Message::find($id);
+        return view('inbox_show',compact('message'));
+    }
+
+    public function sentMessages()
+    {
+        $sent_messages = Auth::user()->sentMessages;
+        return view('sent_messages',compact('sent_messages'));
+    }
+
+    public function sentMessageShow($id)
+    {
+        $message = Message::find($id);
+        return view('sent_message_show',compact('message'));
+    }
     /**
      * Display the specified resource.
      *
