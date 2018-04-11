@@ -14,7 +14,7 @@
     @php
     if(Auth::user())
     {
-        $old_transaction = Auth::user()->transactions()->orderBy('created_at','desc')->get()->first();
+        $old_transaction = Auth::user()->transactions()->orderBy('id','desc')->get()->first();
         if ($old_transaction)
         {
             $balance = $old_transaction->balance;
