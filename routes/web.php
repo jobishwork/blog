@@ -79,3 +79,5 @@ Route::get('inbox_show/{id}', 'MessageController@inboxShow');
 Route::get('sent_messages', 'MessageController@sentMessages');
 Route::get('sent_message_show/{id}', 'MessageController@sentMessageShow');
 
+Route::get('like/{id}','LikeController@store');
+Route::get('dislike/{id}','DislikeController@store');

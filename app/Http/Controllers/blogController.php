@@ -43,7 +43,7 @@ class BlogController extends Controller
 
             // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             // return view('list',compact('posts','saved_ids','followig_users'));
-            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            $posts = Post::orderBy('created_at','desc')->withCount('likes')->withCount('dislikes')->paginate(5);
             return view('list',compact('posts','saved_ids'));
         }
         else
@@ -60,6 +60,7 @@ class BlogController extends Controller
      */
     public function create()
     {
+        if (!Auth::user()) return redirect('/login');
         $categories = Category::orderBy('category')->get();
         return view('add_form',compact('categories'));
     }
@@ -72,6 +73,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        if (!Auth::user()) return redirect('/login');
         $this->validate($request, $this->validationRules(), $this->customErrorMessages());
 
         $post = new Post;
@@ -79,7 +81,7 @@ class BlogController extends Controller
         $post->is_locked = $request->is_locked;
         if ($request->is_locked)
         {
-            $post->credits_required = $request->credits_required;
+            $post->credits_required = $request->points_required;
         }
         else
         {
@@ -144,6 +146,7 @@ class BlogController extends Controller
      */
     public function edit(Post $blog)
     {
+        if (!Auth::user()) return redirect('/login');
         $post = $blog;
         if($post->user_id != Auth::user()->id)
         {
@@ -163,6 +166,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, Post $blog)
     {
+        if (!Auth::user()) return redirect('/login');
         $this->validate($request, $this->validationRules(), $this->customErrorMessages());
         $blog->title = $request->title;
         $blog->is_locked = $request->is_locked;
@@ -190,6 +194,7 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
+        if (!Auth::user()) return redirect('/login');
         $post = Post::find($id);
         $post->delete();
         return redirect('blog/manage')->with('message','Article Deleted successfully');
@@ -197,6 +202,7 @@ class BlogController extends Controller
 
     public function manage()
     {
+        if (!Auth::user()) return redirect('/login');
         $posts = Post::orderBy('created_at','desc')->where('user_id', Auth::user()->id)->paginate(10);
         return view('manage',compact('posts'));
     }
@@ -246,6 +252,7 @@ class BlogController extends Controller
 
     public function savedArticles()
     {
+        if (!Auth::user()) return redirect('/login');
         $user = Auth::user();
         $posts = $user->savedArticles()->orderBy('id','desc')->paginate(5);
         $saved_ids = array_pluck( $posts, 'id' );
@@ -289,6 +296,7 @@ class BlogController extends Controller
 
     public function saveArticle($id)
     {
+        if (!Auth::user()) return redirect('/login');
         $user = Auth::user();
         $post = Post::find($id);
         $saved_articles = $user->savedArticles()->get()->toArray();
@@ -296,6 +304,7 @@ class BlogController extends Controller
         if(in_array($id, $saved_ids))
         {
             $user->savedArticles()->detach($post);
+
         }
         else
         {
@@ -308,20 +317,21 @@ class BlogController extends Controller
 
     public function comment(Request $request, Post $blog)
     {
+        if (!Auth::user()) return redirect('/login');
         if($request->comment)
         {
             $comment = new Comment;
             $comment->comment = $request->comment;
             $comment->user_id = Auth::user()->id;
             $blog->comments()->save($comment);
-            Session::flash('message', 'Member has been updated successfully.');
+            Session::flash('message', 'Comment has been added successfully.');
         }
         return back();
     }
 
     public function uploadImage(Request $request)
     {
-
+        if (!Auth::user()) return redirect('/login');
       // get current time and append the upload file extension to it,
       // then put that name to $photoName variable.
       $photoName = time().'.'.$request->file->getClientOriginalExtension();
@@ -404,12 +414,11 @@ class BlogController extends Controller
         return view('list',compact('posts','page_title','sword'));
     }
 
-
     public function validationRules()
     {
         return $rules = [
                 'title' => 'required',
-                'credits_required' => 'required_if:is_locked,1',
+                'points_required' => 'required_if:is_locked,1|numeric|min:1|Max:10000',
                 'post' => 'required',
                 'categories' => 'required',
             ];
@@ -419,7 +428,7 @@ class BlogController extends Controller
     {
         return $messages = [
             'categories.required' => 'One or more categories required.',
-            'credits_required.required_if' => 'The Credits field is required. '
+            'points_required.required_if' => 'The points required field is required. '
         ];
     }
 }

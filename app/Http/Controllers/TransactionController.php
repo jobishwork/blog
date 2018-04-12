@@ -12,6 +12,10 @@ use DB;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +51,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-                'buy_points' => 'required|numeric',
+                'buy_points' => 'required|numeric|min:1|Max:10000',
           ]);
         $user = Auth::user();
         $old_transaction = $user->transactions()->orderBy('created_at','desc')->get()->first();

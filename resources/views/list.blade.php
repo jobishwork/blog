@@ -18,10 +18,14 @@
         @php
             $unlocked_ids = [];
             $following_ids = [];
+            $likes  = [];
+            $dilikes = [];
         if(Auth::user())
         {
             $following_ids = Auth::user()->following->pluck('id')->toArray();
             $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
+            $likes = Auth::user()->likes->pluck('id')->toArray();
+            $dislikes = Auth::user()->dislikes->pluck('id')->toArray();
         }
         @endphp
 
@@ -74,7 +78,7 @@
                 @if (Auth::guest())
                     <a class="btn btn-primary btn-xs"  href="{{ url('/login?ref=save') }}">Save</a>
                 @else
-                    <a href="{{ url('saveArticle/'.$post_array->id) }}" class="btn btn-primary btn-xs">
+                    <a href="javascript:void(0)" onclick="save({{$post_array->id}})" class="btn btn-primary btn-xs">
                         @if($saved_ids && (in_array($post_array->id, $saved_ids)))
                             Saved
                         @else
@@ -83,7 +87,28 @@
                     </a>
                 @endif
 
+
+
                 <a href="" class="btn btn-danger btn-xs">Report</a>
+                @if(Auth::user())
+                    <a href="{{ url('like/'.$post_array->id) }}" class="btn btn-xs btn-info">
+                        @if($likes && (in_array($post_array->id, $likes)))
+                            Liked
+                        @else
+                            Like
+                        @endif
+                        ({{$post_array->likes_count}})
+                    </a>
+                    <a href="{{ url('dislike/'.$post_array->id) }}" class="btn btn-xs btn-info">
+                        @if($dislikes && (in_array($post_array->id, $dislikes)))
+                            Disliked
+                        @else
+                            Dislike
+                        @endif
+                        ({{$post_array->dislikes_count}})
+                    </a>
+                @endif
+
             </div>
             </div>
             <hr>

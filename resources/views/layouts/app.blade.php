@@ -154,5 +154,19 @@
   toolbar: 'formatselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image',
   });
   </script>
+
+     <script type="text/javascript">
+                    function save(id)
+                    {
+                        alert(id);
+                        $.ajax(
+                            {
+                                url: '{{url('saveArticle')}}/'+id,
+                                type: "GET",
+                            });
+                    }
+                </script>
+
+
   </body>
 </html>

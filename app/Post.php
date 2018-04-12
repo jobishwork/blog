@@ -33,4 +33,13 @@ class Post extends Model
         return $this->BelongsToMany("App\User","saved_articles");
     }
 
+    public function likes()
+    {
+        return $this->BelongsToMany("App\User","likes");
+    }
+
+    public function dislikes()
+    {
+        return $this->BelongsToMany("App\User","dislikes");
+    }
 }
