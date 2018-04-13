@@ -26,15 +26,14 @@
                 @if (Auth::guest())
                     <a class="btn btn-default btn-xs" href="{{ url('/login?ref=follow') }}">Follow</a>
                 @elseif($blog->user->id != Auth::User()->id)
-                    @if($following_ids && in_array($blog->user->id, $following_ids))
-                        <a class="btn btn-default btn-xs" href="{{ url('following/'.$blog->user->id) }}">
+
+                    <a style="width:60px;" id="" onclick="follow({{$blog->user->id}})" href="javascript:void(0)" class="btn btn-default btn-xs follow_link_{{$blog->user->id}}">
+                        @if($following_ids && in_array($blog->user->id, $following_ids))
                             Following
-                        </a>
-                    @else
-                        <a class="btn btn-default btn-xs" href="{{ url('following/'.$blog->user->id) }}">
+                        @else
                             Follow
-                        </a>
-                    @endif
+                        @endif
+                    </a>
                 @endif
             </i>
         </p>
@@ -52,7 +51,7 @@
 
             <div class="row pull-right">
                 <div class="col-md-12"  style="margin-top:8px;">
-                    <a href="" class="btn btn-default btn-xs">{{$blog->view_count}} views</a>
+                    <a class="btn btn-default btn-xs">{{$blog->view_count}} views</a>
                     @if (Auth::guest())
                         <a class="btn btn-warning btn-xs"  href="{{ url('/login?ref=send') }}">Send Private Message</a>
                     @else
@@ -61,7 +60,7 @@
                     @if (Auth::guest())
                         <a class="btn btn-primary btn-xs"  href="{{ url('/login?ref=save') }}">Save</a>
                     @else
-                        <a href="{{ url('saveArticle/'.$blog->id) }}" class="btn btn-primary btn-xs">
+                        <a style="width:45px;" href="javascript:void(0)" id="save_link_{{$blog->id}}" onclick="save({{$blog->id}})" class="btn btn-primary btn-xs">
                             @if($saved_ids && (in_array($blog->id, $saved_ids)))
                                 Saved
                             @else

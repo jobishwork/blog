@@ -156,17 +156,94 @@
   </script>
 
      <script type="text/javascript">
-                    function save(id)
+        function save(id)
+        {
+            $('#save_link_'+id).html('<img width="15" src="{{url('images/btn_loader2.gif')}}">');
+            $.ajax(
+                {
+                    url: '{{url('saveArticle')}}/'+id,
+                    type: "GET",
+                    success: function(response)
                     {
-                        alert(id);
-                        $.ajax(
-                            {
-                                url: '{{url('saveArticle')}}/'+id,
-                                type: "GET",
-                            });
-                    }
-                </script>
+                        if (response == 'attach')
+                        {
+                            $('#save_link_'+id).text('Saved');
+                        }
+                        else
+                        {
+                            $('#save_link_'+id).text('Save');
+                        }
+                    },
+                });
+        }
 
+        function like(id)
+        {
+            $('#like_link_'+id).html('<img width="15" src="{{url('images/btn_loader2.gif')}}">');
+            $.ajax(
+                {
+                    url: '{{url('like')}}/'+id,
+                    type: "GET",
+                    success: function(response)
+                    {
+                        // console.log(response.name);
+                        // console.log(response.likes_count);
+                        // console.log(response.dislikes_count);
+                        if (response.name == 'attach')
+                        {
+                            $('#like_link_'+id).text('Liked ('+response.likes_count+')');
+                            $('#dislike_link_'+id).text('Dislike ('+response.dislikes_count+')');
+                        }
+                        else if(response.name == 'detach')
+                        {
+                            $('#like_link_'+id).text('Like ('+response.likes_count+')');
+                        }
+                    },
+                });
+        }
 
+        function dislike(id)
+        {
+            $('#dislike_link_'+id).html('<img width="15" src="{{url('images/btn_loader2.gif')}}">');
+            $.ajax(
+                {
+                    url: '{{url('dislike')}}/'+id,
+                    type: "GET",
+                    success: function(response)
+                    {
+                        if (response.name == 'attach')
+                        {
+                            $('#dislike_link_'+id).text('Disliked ('+response.dislikes_count+')');
+                            $('#like_link_'+id).text('Like ('+response.likes_count+')');
+                        }
+                        else if(response.name == 'detach')
+                        {
+                            $('#dislike_link_'+id).text('Dislike ('+response.dislikes_count+')');
+                        }
+                    },
+                });
+        }
+
+        function follow(id)
+        {
+            $('.follow_link_'+id).html('<img width="15" src="{{url('images/btn_loader2.gif')}}">');
+            $.ajax(
+                {
+                    url: '{{url('following')}}/'+id,
+                    type: "GET",
+                    success: function(response)
+                    {
+                        if (response == 'attach')
+                        {
+                            $('.follow_link_'+id).text('Following');
+                        }
+                        else
+                        {
+                            $('.follow_link_'+id).text('Follow');
+                        }
+                    },
+                });
+        }
+    </script>
   </body>
 </html>

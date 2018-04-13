@@ -43,15 +43,13 @@
                     @if (Auth::guest())
                         <a class="btn btn-default btn-xs" href="{{ url('/login?ref=follow') }}">Follow</a>
                     @elseif($post_array->user->id != Auth::User()->id)
-                        @if($following_ids && in_array($post_array->user->id, $following_ids))
-                        <a class="btn btn-default btn-xs" href="{{ url('following/'.$post_array->user->id) }}">
-                            Following
+                        <a style="width:60px;" id="" onclick="follow({{$post_array->user->id}})" href="javascript:void(0)" class="btn btn-default btn-xs follow_link_{{$post_array->user->id}}">
+                            @if($following_ids && in_array($post_array->user->id, $following_ids))
+                                Following
+                            @else
+                                Follow
+                            @endif
                         </a>
-                        @else
-                        <a class="btn btn-default btn-xs" href="{{ url('following/'.$post_array->user->id) }}">
-                            Follow
-                        </a>
-                        @endif
                     @endif
                 </i>
             </p>
@@ -68,7 +66,7 @@
             </p>
             <div class="row">
             <div class="col-md-12"  style="margin-top:8px;">
-                <a href="" class="btn btn-default btn-xs">{{$post_array->view_count}} views</a>
+                <a  class="btn btn-default btn-xs">{{$post_array->view_count}} views</a>
                 @if($post_array->comments->count() == 1)
                     <a href="{{url('blog/'.$post_array->id)}}" class="btn btn-default btn-xs">{{$post_array->comments->count()}} Comment</a>
                 @else
@@ -78,7 +76,7 @@
                 @if (Auth::guest())
                     <a class="btn btn-primary btn-xs"  href="{{ url('/login?ref=save') }}">Save</a>
                 @else
-                    <a href="javascript:void(0)" onclick="save({{$post_array->id}})" class="btn btn-primary btn-xs">
+                    <a style="width:45px;" id="save_link_{{$post_array->id}}"  href="javascript:void(0)" onclick="save({{$post_array->id}})" class="btn btn-primary btn-xs">
                         @if($saved_ids && (in_array($post_array->id, $saved_ids)))
                             Saved
                         @else
@@ -87,11 +85,9 @@
                     </a>
                 @endif
 
-
-
                 <a href="" class="btn btn-danger btn-xs">Report</a>
                 @if(Auth::user())
-                    <a href="{{ url('like/'.$post_array->id) }}" class="btn btn-xs btn-info">
+                    <a style="width:70px;" id="like_link_{{$post_array->id}}" href="javascript:void(0)" onclick="like({{$post_array->id}})" class="btn btn-xs btn-info">
                         @if($likes && (in_array($post_array->id, $likes)))
                             Liked
                         @else
@@ -99,7 +95,7 @@
                         @endif
                         ({{$post_array->likes_count}})
                     </a>
-                    <a href="{{ url('dislike/'.$post_array->id) }}" class="btn btn-xs btn-info">
+                    <a style="width:80px;" id="dislike_link_{{$post_array->id}}" href="javascript:void(0)" onclick="dislike({{$post_array->id}})" class="btn btn-xs btn-info">
                         @if($dislikes && (in_array($post_array->id, $dislikes)))
                             Disliked
                         @else

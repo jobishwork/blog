@@ -21,11 +21,23 @@ class DislikeController extends Controller
         if (in_array($id, $likes))
         {
             $user->dislikes()->detach($post);
+            // return response()->json('detach');
+
+            $count_post = Post::withCount('likes','dislikes')->find($id);
+            $likes_count = $count_post->likes_count;
+            $dislikes_count = $count_post->dislikes_count;
+            return response()->json(['name' => 'detach','likes_count' => $likes_count,'dislikes_count' => $dislikes_count]);
         }
         else
         {
-           $user->dislikes()->attach($post);
-           $user->likes()->detach($post);
+            $user->dislikes()->attach($post);
+            $user->likes()->detach($post);
+            // return response()->json('attach');
+
+            $count_post = Post::withCount('likes','dislikes')->find($id);
+            $likes_count = $count_post->likes_count;
+            $dislikes_count = $count_post->dislikes_count;
+            return response()->json(['name' => 'attach','likes_count' => $likes_count,'dislikes_count' => $dislikes_count]);
         }
         return back();
     }

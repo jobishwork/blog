@@ -49,20 +49,18 @@ class FollowerController extends Controller
         // $user = User::find(3);
         // $user->followers()->attach(1);
 
-        DB::transaction(function () use ($id)
+        $user = Auth::User();
+        $following_ids = $user->following->pluck('id')->toArray();
+        if(in_array($id, $following_ids))
         {
-            $user = Auth::User();
-            $following_ids = $user->following->pluck('id')->toArray();
-            if(in_array($id, $following_ids))
-            {
-                $user->following()->detach($id);
-            }
-            else
-            {
-                $user->following()->attach($id);
-            }
-
-        });
+            $user->following()->detach($id);
+            return response()->json('detach');
+        }
+        else
+        {
+            $user->following()->attach($id);
+            return response()->json('attach');
+        }
         return back();
     }
 

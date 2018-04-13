@@ -43,7 +43,7 @@ class BlogController extends Controller
 
             // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             // return view('list',compact('posts','saved_ids','followig_users'));
-            $posts = Post::orderBy('created_at','desc')->withCount('likes')->withCount('dislikes')->paginate(5);
+            $posts = Post::orderBy('created_at','desc')->withCount('likes','dislikes')->paginate(5);
             return view('list',compact('posts','saved_ids'));
         }
         else
@@ -279,19 +279,18 @@ class BlogController extends Controller
     public function topArticles()
     {
         if (Auth::user())
-            {
+        {
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
             $posts = Post::orderBy('view_count','desc')->paginate(5);
             return view('list',compact('posts','saved_ids'));
-            }
+        }
         else
         {
             $posts = Post::orderBy('view_count','desc')->paginate(5);
             return view('list',compact('posts'));
         }
-
     }
 
     public function saveArticle($id)
@@ -304,14 +303,14 @@ class BlogController extends Controller
         if(in_array($id, $saved_ids))
         {
             $user->savedArticles()->detach($post);
-
+            return response()->json('detach');
         }
         else
         {
             // $post->savedArticles()->attach($user);
             $user->savedArticles()->attach($post);
+            return response()->json('attach');
         }
-
         return back();
     }
 
