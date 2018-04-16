@@ -78,6 +78,7 @@
                         <li><a href="{{ url('/sent_messages') }}">Sent Messages </a></li>
                         @if(Auth::user()->type == 1)
                         <li><a href="{{ url('/users/list') }}">Users</a></li>
+                        <li><a href="{{ url('/reported-articles/list') }}">Reported Articles</a></li>
                         @endif
                         <li>
                            <a href="{{ url('/logout') }}"
@@ -240,6 +241,27 @@
                         else
                         {
                             $('.follow_link_'+id).text('Follow');
+                        }
+                    },
+                });
+        }
+
+        function report(id)
+        {
+            $('#report_article_link_'+id).html('<img width="15" src="{{url('images/btn_loader2.gif')}}">');
+            $.ajax(
+                {
+                    url: '{{url('report-article')}}/'+id,
+                    type: "GET",
+                    success: function(response)
+                    {
+                        if (response.name == 'attach')
+                        {
+                            $('#report_article_link_'+id).text('Reported');
+                        }
+                        else if(response.name == 'detach')
+                        {
+                            $('#report_article_link_'+id).text('Report');
                         }
                     },
                 });

@@ -19,13 +19,16 @@
             $unlocked_ids = [];
             $following_ids = [];
             $likes  = [];
-            $dilikes = [];
+            $dislikes = [];
+            $reoported_ids = [];
+
         if(Auth::user())
         {
             $following_ids = Auth::user()->following->pluck('id')->toArray();
             $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
             $likes = Auth::user()->likes->pluck('id')->toArray();
             $dislikes = Auth::user()->dislikes->pluck('id')->toArray();
+            $reoported_ids =  Auth::user()->reportedArticles->pluck('id')->toArray();
         }
         @endphp
 
@@ -85,7 +88,18 @@
                     </a>
                 @endif
 
-                <a href="" class="btn btn-danger btn-xs">Report</a>
+                @if (Auth::guest())
+                    <a href="{{ url('/login?ref=report') }}" class="btn btn-danger btn-xs">Report</a>
+                @else
+                    <a style="width:60px" id="report_article_link_{{$post_array->id}}" href="javascript:void(0)" onclick="report({{$post_array->id}})"  class="btn btn-danger btn-xs">
+                        @if($reoported_ids && (in_array($post_array->id, $reoported_ids)))
+                            Reported
+                        @else
+                            Report
+                        @endif
+                    </a>
+                @endif
+
                 @if(Auth::user())
                     <a style="width:90px;" id="like_link_{{$post_array->id}}" href="javascript:void(0)" onclick="like({{$post_array->id}})" class="btn btn-xs btn-info">
                         @if($likes && (in_array($post_array->id, $likes)))

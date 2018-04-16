@@ -89,4 +89,9 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany("App\Post","dislikes");
     }
+
+    public function reportedArticles()
+    {
+        return $this->BelongsToMany("App\Post","reported_articles");
+    }
 }

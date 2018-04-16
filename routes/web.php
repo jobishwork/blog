@@ -81,3 +81,11 @@ Route::get('sent_message_show/{id}', 'MessageController@sentMessageShow');
 
 Route::get('like/{id}','LikeController@store');
 Route::get('dislike/{id}','DislikeController@store');
+
+Route::get('report-article/{id}', 'ReportController@store');
+Route::get('reported-articles/list', 'ReportController@index');
+
+Route::get('suspend-article/{id}', 'SuspendController@store');
+
+
+

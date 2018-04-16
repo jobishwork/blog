@@ -43,7 +43,8 @@ class BlogController extends Controller
 
             // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             // return view('list',compact('posts','saved_ids','followig_users'));
-            $posts = Post::orderBy('vote_counts','desc')
+            $posts = Post::where('is_suspended',0)
+                ->orderBy('vote_counts','desc')
                 ->orderBy('view_count','desc')
                 ->orderBy('created_at','desc')
                 ->withCount('likes','dislikes')
@@ -261,7 +262,7 @@ class BlogController extends Controller
     {
         if (!Auth::user()) return redirect('/login');
         $user = Auth::user();
-        $posts = $user->savedArticles()->orderBy('id','desc')->withCount('likes','dislikes')->paginate(5);
+        $posts = $user->savedArticles()->where('is_suspended',0)->orderBy('id','desc')->withCount('likes','dislikes')->paginate(5);
         $saved_ids = array_pluck( $posts, 'id' );
         return view('list',compact('posts','saved_ids'));
     }
@@ -274,7 +275,9 @@ class BlogController extends Controller
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
             // $posts = Post::orderBy('created_at','desc')->paginate(5);
-            $posts = Post::orderBy('created_at','desc')->withCount('likes','dislikes')->paginate(5);
+            $posts = Post::where('is_suspended',0)
+                ->orderBy('created_at','desc')
+                ->withCount('likes','dislikes')->paginate(5);
             return view('list',compact('posts','saved_ids'));
         }
         else
@@ -291,7 +294,10 @@ class BlogController extends Controller
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
-            $posts = Post::orderBy('view_count','desc')->withCount('likes','dislikes')->paginate(5);
+            $posts = Post::where('is_suspended',0)
+                ->orderBy('view_count','desc')
+                ->withCount('likes','dislikes')
+                ->paginate(5);
             // $posts = Post::orderBy('created_at','desc')->withCount('likes','dislikes')->paginate(5);
             return view('list',compact('posts','saved_ids'));
         }
