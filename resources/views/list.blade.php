@@ -87,19 +87,19 @@
 
                 <a href="" class="btn btn-danger btn-xs">Report</a>
                 @if(Auth::user())
-                    <a style="width:70px;" id="like_link_{{$post_array->id}}" href="javascript:void(0)" onclick="like({{$post_array->id}})" class="btn btn-xs btn-info">
+                    <a style="width:90px;" id="like_link_{{$post_array->id}}" href="javascript:void(0)" onclick="like({{$post_array->id}})" class="btn btn-xs btn-info">
                         @if($likes && (in_array($post_array->id, $likes)))
-                            Liked
+                            Upvoted
                         @else
-                            Like
+                            Upvote
                         @endif
                         ({{$post_array->likes_count}})
                     </a>
-                    <a style="width:80px;" id="dislike_link_{{$post_array->id}}" href="javascript:void(0)" onclick="dislike({{$post_array->id}})" class="btn btn-xs btn-info">
+                    <a style="width:100px;" id="dislike_link_{{$post_array->id}}" href="javascript:void(0)" onclick="dislike({{$post_array->id}})" class="btn btn-xs btn-info">
                         @if($dislikes && (in_array($post_array->id, $dislikes)))
-                            Disliked
+                            Downvoted
                         @else
-                            Dislike
+                            Downvote
                         @endif
                         ({{$post_array->dislikes_count}})
                     </a>

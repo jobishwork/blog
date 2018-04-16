@@ -43,12 +43,19 @@ class BlogController extends Controller
 
             // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             // return view('list',compact('posts','saved_ids','followig_users'));
-            $posts = Post::orderBy('created_at','desc')->withCount('likes','dislikes')->paginate(5);
+            $posts = Post::orderBy('vote_counts','desc')
+                ->orderBy('view_count','desc')
+                ->orderBy('created_at','desc')
+                ->withCount('likes','dislikes')
+                ->paginate(5);
             return view('list',compact('posts','saved_ids'));
         }
         else
         {
-            $posts = Post::orderBy('created_at','desc')->paginate(5);
+            $posts = Post::orderBy('vote_counts','desc')
+                ->orderBy('view_count','desc')
+                ->orderBy('created_at','desc')
+                ->paginate(5);
             return view('list',compact('posts'));
         }
     }

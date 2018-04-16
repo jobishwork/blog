@@ -27,6 +27,9 @@ class LikeController extends Controller
             $count_post = Post::withCount('likes','dislikes')->find($id);
             $likes_count = $count_post->likes_count;
             $dislikes_count = $count_post->dislikes_count;
+            $vote_counts = $likes_count - $dislikes_count;
+            $count_post->vote_counts = $vote_counts;
+            $count_post->save();
             return response()->json(['name' => 'detach','likes_count' => $likes_count,'dislikes_count' => $dislikes_count]);
         }
         else
@@ -38,6 +41,9 @@ class LikeController extends Controller
             $count_post = Post::withCount('likes','dislikes')->find($id);
             $likes_count = $count_post->likes_count;
             $dislikes_count = $count_post->dislikes_count;
+            $vote_counts = $likes_count - $dislikes_count;
+            $count_post->vote_counts = $vote_counts;
+            $count_post->save();
             return response()->json(['name' => 'attach','likes_count' => $likes_count,'dislikes_count' => $dislikes_count]);
         }
         return back();

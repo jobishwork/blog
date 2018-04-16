@@ -4,7 +4,7 @@
          <ul class="list-group" style="margin-bottom:0px;">
             <li class="list-group-item"> <a href="{{url('.')}}">Home</a> </li>
             <li class="list-group-item"> <a href="{{url('newArticles')}}"> New Articles </a> </li>
-            <li class="list-group-item"> <a href="{{url('topArticles')}}"> Top Articles </a> </li>
+            <li class="list-group-item"> <a href="{{url('topArticles')}}"> Most Viewed Articles </a> </li>
             @if(Auth::check())
                <li class="list-group-item"> <a href="{{url('saved_articles')}}"> Saved Articles </a> </li>
             @endif

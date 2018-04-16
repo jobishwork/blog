@@ -17,8 +17,8 @@ class DislikeController extends Controller
     {
         $post = Post::find($id);
         $user = Auth::user();
-        $likes = $user->dislikes->pluck('id')->toArray();
-        if (in_array($id, $likes))
+        $dislikes = $user->dislikes->pluck('id')->toArray();
+        if (in_array($id, $dislikes))
         {
             $user->dislikes()->detach($post);
             // return response()->json('detach');
@@ -26,6 +26,9 @@ class DislikeController extends Controller
             $count_post = Post::withCount('likes','dislikes')->find($id);
             $likes_count = $count_post->likes_count;
             $dislikes_count = $count_post->dislikes_count;
+            $vote_counts = $likes_count - $dislikes_count;
+            $count_post->vote_counts = $vote_counts;
+            $count_post->save();
             return response()->json(['name' => 'detach','likes_count' => $likes_count,'dislikes_count' => $dislikes_count]);
         }
         else
@@ -37,6 +40,9 @@ class DislikeController extends Controller
             $count_post = Post::withCount('likes','dislikes')->find($id);
             $likes_count = $count_post->likes_count;
             $dislikes_count = $count_post->dislikes_count;
+            $vote_counts = $likes_count - $dislikes_count;
+            $count_post->vote_counts = $vote_counts;
+            $count_post->save();
             return response()->json(['name' => 'attach','likes_count' => $likes_count,'dislikes_count' => $dislikes_count]);
         }
         return back();

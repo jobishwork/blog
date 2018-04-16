@@ -36,7 +36,6 @@
                 </td>
                 <td>{{$user->email}}</td>
                 <td>
-                    <a href="{{url("/transactions/list/$user->id")}}" class="btn btn-primary btn-block btn-xs" style="">
                         @php
                             $old_transaction = $user->transactions()->orderBy('created_at','desc')->get()->first();
                             if ($old_transaction)
@@ -49,7 +48,6 @@
                             }
                         @endphp
                         {{$balance}}
-                    </a>
                 </td>
             </tr>
           @endForeach

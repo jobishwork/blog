@@ -16,6 +16,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         factory(App\User::class,5)->create();
+
+         DB::table('users')->insert([
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => bcrypt('123456'),
+                'type' => 1,
+            ]);
+
         factory(App\Category::class,5)->create();
 
         $categories_array = App\Category::all('id')->pluck('id')->toArray();

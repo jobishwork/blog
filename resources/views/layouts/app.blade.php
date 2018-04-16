@@ -191,12 +191,12 @@
                         // console.log(response.dislikes_count);
                         if (response.name == 'attach')
                         {
-                            $('#like_link_'+id).text('Liked ('+response.likes_count+')');
-                            $('#dislike_link_'+id).text('Dislike ('+response.dislikes_count+')');
+                            $('#like_link_'+id).text('Upvoted ('+response.likes_count+')');
+                            $('#dislike_link_'+id).text('Downvote ('+response.dislikes_count+')');
                         }
                         else if(response.name == 'detach')
                         {
-                            $('#like_link_'+id).text('Like ('+response.likes_count+')');
+                            $('#like_link_'+id).text('Upvote ('+response.likes_count+')');
                         }
                     },
                 });
@@ -213,12 +213,12 @@
                     {
                         if (response.name == 'attach')
                         {
-                            $('#dislike_link_'+id).text('Disliked ('+response.dislikes_count+')');
-                            $('#like_link_'+id).text('Like ('+response.likes_count+')');
+                            $('#dislike_link_'+id).text('Downvoted ('+response.dislikes_count+')');
+                            $('#like_link_'+id).text('Upvote ('+response.likes_count+')');
                         }
                         else if(response.name == 'detach')
                         {
-                            $('#dislike_link_'+id).text('Dislike ('+response.dislikes_count+')');
+                            $('#dislike_link_'+id).text('Downvote ('+response.dislikes_count+')');
                         }
                     },
                 });
