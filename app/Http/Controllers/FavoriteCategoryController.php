@@ -19,7 +19,10 @@ class FavoriteCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $favorites = $user->favoriteCategories->pluck('id')->toArray(); //Get the category_ids from pivot table
+        $categories = Category::get();
+        return view('favorite_categories',compact('categories','favorites'));
     }
 
     /**
@@ -62,21 +65,7 @@ class FavoriteCategoryController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
-        $post = Post::find($id);
-        $saved_articles = $user->savedArticles()->get()->toArray();
-        $saved_ids = array_pluck( $saved_articles, 'id' );
-        if(in_array($id, $saved_ids))
-        {
-            $user->savedArticles()->detach($post);
-        }
-        else
-        {
-            // $post->savedArticles()->attach($user);
-            $user->savedArticles()->attach($post);
-        }
 
-        return back();
     }
 
     /**

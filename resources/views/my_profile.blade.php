@@ -11,24 +11,38 @@
                 @endif
             </div>
 
-           <div class="well">
-            <div class="row">
-            <div class="col-md-6">
-                <a href="{{ url('/my_followers') }}" class="btn  btn-primary">
-                    {{Auth::user()->followers->count()}}
-                    <br>
-                    Followers
-                </a>
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ url('/my_followers') }}" class="btn  btn-primary">
+                            {{Auth::user()->followers->count()}}
+                            <br>
+                            Followers
+                        </a>
+                    </div>
+                    <div class="col-md-6 ">
+                        <a href="{{ url('/my_followings') }}" class="btn btn-primary">
+                            {{Auth::user()->following->count()}}
+                            <br>
+                            Following
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6 ">
-                <a href="{{ url('/my_followings') }}" class="btn btn-primary">
-                    {{Auth::user()->following->count()}}
-                    <br>
-                    Following
-                </a>
+            <div class="well">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <label>My Interest</label>
+                        <ul style="padding-left:20px;">
+                            @foreach($categories as $category)
+                            <li>
+                                <a href="{{url('blog/category/'.$category->id)}}">{{$category->category}}</a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
             </div>
-</div>
-        </div>
         </div>
         <div class="col-lg-9">
         @if(Session::has('message'))

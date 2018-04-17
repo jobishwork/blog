@@ -53,6 +53,7 @@ Route::get('my_followings', 'FollowerController@myFollowings');
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 
+Route::get('favorite-category', 'FavoriteCategoryController@index');
 Route::post('favorite_category', 'FavoriteCategoryController@store');
 
 Route::get('privacy-policy', function () {
@@ -88,7 +89,3 @@ Route::get('reported-articles/list', 'ReportController@index');
 Route::get('suspend-article/{id}', 'SuspendController@store');
 
 Route::get('my-profile', 'ProfileController@index');
-
-
-
-

@@ -10,7 +10,7 @@ class CategoryPost extends Model
 
     public function posts()
     {
-        return $this->BelongsTo('App\Post');
+        return $this->BelongsTo('App\Post','post_id');
     }
 
     public function categories()

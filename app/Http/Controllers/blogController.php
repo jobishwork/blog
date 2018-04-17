@@ -29,7 +29,7 @@ class BlogController extends Controller
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
-            $following_ids = $user->following->pluck('id')->toArray();
+            $following_ids = [];//$user->following->pluck('id')->toArray();
             if ($following_ids)
             {
                 $followig_users = true;
@@ -37,15 +37,14 @@ class BlogController extends Controller
             else
             {
                 $followig_users = false;
-                // $favorites = $user->favoriteCategories()->get()->pluck('id')->toArray(); //Get the category_ids from pivot table
-                // $categories = Category::get();
-                // return view('favorite_categories',compact('categories','favorites'));
             }
 
             // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             $favorite_categories = $user->favoriteCategories->pluck('id');
             $favorite_posts_ids = CategoryPost::whereIn('category_id', $favorite_categories)->get()->pluck('post_id');
+
             $posts = Post::whereIn('id',$favorite_posts_ids)->paginate(5);
+            $categories = $user->favoriteCategories;
 
             // $posts = Post::where('is_suspended',0)
             //     ->orderBy('vote_counts','desc')
@@ -53,7 +52,7 @@ class BlogController extends Controller
             //     ->orderBy('created_at','desc')
             //     ->withCount('likes','dislikes')
             //     ->paginate(5);
-            return view('my_profile',compact('posts','saved_ids'));
+            return view('my_profile',compact('posts','saved_ids','categories'));
         }
         else
         {
