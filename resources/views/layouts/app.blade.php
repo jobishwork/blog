@@ -52,7 +52,6 @@
         </div>
                <ul class="nav navbar-nav navbar-right">
                   @if (Auth::guest())
-                      <li><a  href="{{ url('/login?ref=add-post') }}">Add Article</a></li>
                       <li><a href="{{ url('/login') }}">Login</a></li>
                       <li><a href="{{ url('/register') }}">Register</a></li>
                   @else
@@ -72,10 +71,9 @@
                         <li><a href="{{ url('/favorite') }}">My favorite</a></li>
                         <li><a href="{{ url('/notification') }}">Notification</a></li>
                         <li><a href="{{ url('/settings') }}">Settings</a></li>
-                        <li><a href="{{ url('/my_followers') }}">My Followers</a></li>
-                        <li><a href="{{ url('/my_followings') }}">My Followings</a></li>
                         <li><a href="{{ url('/inbox') }}">Inbox</a></li>
                         <li><a href="{{ url('/sent_messages') }}">Sent Messages </a></li>
+                        <li><a href="{{ url('/my-profile')}}">My Profile</a></li>
                         @if(Auth::user()->type == 1)
                         <li><a href="{{ url('/users/list') }}">Users</a></li>
                         <li><a href="{{ url('/reported-articles/list') }}">Reported Articles</a></li>

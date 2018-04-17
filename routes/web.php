@@ -87,5 +87,8 @@ Route::get('reported-articles/list', 'ReportController@index');
 
 Route::get('suspend-article/{id}', 'SuspendController@store');
 
+Route::get('my-profile', 'ProfileController@index');
+
+
 
 

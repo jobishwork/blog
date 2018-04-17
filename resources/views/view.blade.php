@@ -23,9 +23,8 @@
         <p><span class="glyphicon glyphicon-time"></span>
             <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by
                 <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a>
-                @if (Auth::guest())
-                    <a class="btn btn-default btn-xs" href="{{ url('/login?ref=follow') }}">Follow</a>
-                @elseif($blog->user->id != Auth::User()->id)
+
+                @if(Auth::user() && ($blog->user->id != Auth::User()->id))
 
                     <a style="width:60px;" id="" onclick="follow({{$blog->user->id}})" href="javascript:void(0)" class="btn btn-default btn-xs follow_link_{{$blog->user->id}}">
                         @if($following_ids && in_array($blog->user->id, $following_ids))
@@ -52,14 +51,8 @@
             <div class="row pull-right">
                 <div class="col-md-12"  style="margin-top:8px;">
                     <a class="btn btn-default btn-xs">{{$blog->view_count}} views</a>
-                    @if (Auth::guest())
-                        <a class="btn btn-warning btn-xs"  href="{{ url('/login?ref=send') }}">Send Private Message</a>
-                    @else
+                    @if(Auth::user())
                         <a class="btn btn-warning btn-xs"  href="{{ url('message/create/'.$blog->user->id) }}">Send Private Message</a>
-                    @endif
-                    @if (Auth::guest())
-                        <a class="btn btn-primary btn-xs"  href="{{ url('/login?ref=save') }}">Save</a>
-                    @else
                         <a style="width:45px;" href="javascript:void(0)" id="save_link_{{$blog->id}}" onclick="save({{$blog->id}})" class="btn btn-primary btn-xs">
                             @if($saved_ids && (in_array($blog->id, $saved_ids)))
                                 Saved
@@ -67,8 +60,8 @@
                                 Save
                             @endif
                         </a>
+                        <a href="" class="btn btn-danger btn-xs">Report</a>
                     @endif
-                    <a href="" class="btn btn-danger btn-xs">Report</a>
                 </div>
             </div>
          <hr>
@@ -109,7 +102,6 @@
         </h4>
 
          @if(count($comments))
-
             @foreach($comments as $comment_array)
             <div class="media">
                <div>
@@ -123,10 +115,7 @@
                   <i>No comments found.</i>
                </div>
           @endif
-
       </div>
-      <!-- Blog Sidebar Widgets Column -->
-
    </div>
 </div>
 </div>

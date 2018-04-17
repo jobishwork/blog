@@ -47,5 +47,4 @@ class Post extends Model
     {
         return $this->BelongsToMany("App\User","reported_articles");
     }
-
 }

@@ -1,11 +1,36 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-   <div class="row">
-      <div class="col-md-3 right-sidebar">
-      @include('sidebar')
-      </div>
-      <div class="col-lg-9">
+    <div class="row">
+        <div class="col-md-3 right-sidebar">
+            <div class="well" >
+                @if(Auth::user()->profile_photo)
+                   <img class="img-rounded img-responsive" src="{{ url('files/user/profile_photo/resized/'.Auth::user()->profile_photo) }}">
+                @else
+                   <img class="img-rounded img-responsive" src="{{ url('images/default-user.png') }}">
+                @endif
+            </div>
+
+           <div class="well">
+            <div class="row">
+            <div class="col-md-6">
+                <a href="{{ url('/my_followers') }}" class="btn  btn-primary">
+                    {{Auth::user()->followers->count()}}
+                    <br>
+                    Followers
+                </a>
+            </div>
+            <div class="col-md-6 ">
+                <a href="{{ url('/my_followings') }}" class="btn btn-primary">
+                    {{Auth::user()->following->count()}}
+                    <br>
+                    Following
+                </a>
+            </div>
+</div>
+        </div>
+        </div>
+        <div class="col-lg-9">
         @if(Session::has('message'))
             <p class="alert alert-success">{{ Session::get('message') }}</p>
         @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use App\CategoryPost;
 use App\User;
 use App\Comment;
 use App\ViewCount;
@@ -42,14 +43,17 @@ class BlogController extends Controller
             }
 
             // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
-            // return view('list',compact('posts','saved_ids','followig_users'));
-            $posts = Post::where('is_suspended',0)
-                ->orderBy('vote_counts','desc')
-                ->orderBy('view_count','desc')
-                ->orderBy('created_at','desc')
-                ->withCount('likes','dislikes')
-                ->paginate(5);
-            return view('list',compact('posts','saved_ids'));
+            $favorite_categories = $user->favoriteCategories->pluck('id');
+            $favorite_posts_ids = CategoryPost::whereIn('category_id', $favorite_categories)->get()->pluck('post_id');
+            $posts = Post::whereIn('id',$favorite_posts_ids)->paginate(5);
+
+            // $posts = Post::where('is_suspended',0)
+            //     ->orderBy('vote_counts','desc')
+            //     ->orderBy('view_count','desc')
+            //     ->orderBy('created_at','desc')
+            //     ->withCount('likes','dislikes')
+            //     ->paginate(5);
+            return view('my_profile',compact('posts','saved_ids'));
         }
         else
         {
