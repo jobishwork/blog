@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use Auth;
+use Session;
 
 class FavoriteCategoryController extends Controller
 {
@@ -54,6 +55,7 @@ class FavoriteCategoryController extends Controller
         //     $category = Category::find($favorite);
         //     $user->favoriteCategories()->sync($category);
         // }
+        Session::flash('message', 'Favorite categories has been updated successfully.');
         return back();
     }
 

@@ -82,18 +82,18 @@ class FollowerController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function myFollowers()
+    public function followers($id)
     {
-        $user = Auth::User();
+        $user = User::find($id);
         $followers = $user->followers()->paginate(10);
-        return view('my_followers',compact('followers'));
+        return view('followers',compact('followers','user'));
     }
 
-    public function myFollowings()
+    public function followings($id)
     {
-        $user = Auth::User();
+        $user = User::find($id);
         $followings = $user->following()->paginate(10);
-        return view('my_followings',compact('followings'));
+        return view('followings',compact('followings','user'));
     }
 
     public function edit($id)

@@ -19,7 +19,7 @@
         </div>
         <hr>
         <div>
-            <a align:right class="btn btn-info pull-right" href="{{ url('points/create/'.$user->id) }}">Buy Points</a>
+            <a align:right class="btn btn-info pull-right" href="{{ url('points/create') }}">Buy Points</a>
         </div>
         @if (count($errors) > 0)
             <div class="alert alert-danger">

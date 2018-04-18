@@ -6,14 +6,14 @@
     <div class="col-md-3 right-sidebar">
       @include('sidebar')
     </div>
-    @if(Session::has('message'))
-        <p class="alert alert-warning">{{ Session::get('message') }}</p>
-      @endif
     <!-- Blog Post Content Column -->
     <div class="col-lg-9">
+        @if(Session::has('message'))
+        <p class="alert alert-warning">{{ Session::get('message') }}</p>
+      @endif
         <h3><a href="">Please select one or more Favorite Categories</a></h3>
         <hr>
-        <form name="form1" method="POST" action="{{url('favorite_category')}}">
+        <form name="form1" method="POST" action="{{url('favorite-category')}}">
             {{ csrf_field() }}
             <div class="form-group">
                 @foreach($categories as $category)
@@ -32,6 +32,5 @@
         </form>
     </div>
   </div>
-</div>
 </div>
 @endsection

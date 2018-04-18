@@ -1,20 +1,80 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-   <div class="row">
-      <!-- Blog Post Content Column -->
-      <div class="col-md-3 right-sidebar">
-         @include('sidebar')
-      </div>
-        @php
-            $unlocked_ids = [];
-            $following_ids = [];
-        if(Auth::user())
-        {
-            $following_ids = Auth::user()->following->pluck('id')->toArray();
-            $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
-        }
-        @endphp
+    @php
+        $user = $blog->user
+    @endphp
+    <div class="row">
+    <!-- Blog Post Content Column -->
+    <div class="col-md-3 right-sidebar">
+        <div class="well" >
+         @if($blog->user->profile_photo)
+                   <img class="img-rounded img-responsive" src="{{ url('files/user/profile_photo/resized/'.$blog->user->profile_photo) }}">
+                @else
+                   <img class="img-rounded img-responsive" src="{{ url('images/default-user.png') }}">
+                @endif
+                <br>
+                <a href="{{url('blog/user/'.$user->id)}}" class="btn btn-block btn-default">{{$blog->user->name}}</a>
+                <ul>
+                    <li style="margin-top:10px">
+                        <a  href="{{ url('message/create/'.$user->id) }}">Send Private Message</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ url('/followers/'.$blog->user->id) }}" class="btn  btn-primary">
+                            {{$blog->user->followers->count()}}
+                            <br>
+                            Followers
+                        </a>
+                    </div>
+                    <div class="col-md-6 ">
+                        <a href="{{ url('/followings/'.$blog->user->id) }}" class="btn btn-primary">
+                            {{$blog->user->following->count()}}
+                            <br>
+                            Following
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="well" style="padding:5px;">
+                <ul class="list-group" style="margin-bottom:0px;">
+                    <li class="list-group-item"> <a href="{{url('newArticles')}}"> New Articles </a> </li>
+                    <li class="list-group-item"> <a href="{{url('topArticles')}}"> Most Viewed Articles </a> </li>
+                    <li class="list-group-item"> <a href="{{url('saved_articles')}}"> Saved Articles </a> </li>
+                    @if(Auth::user())
+                        <li class="list-group-item"> <a href="{{url('blog/user/'.Auth::user()->id)}}"> My Articles </a> </li>
+                    @endif
+                </ul>
+            </div>
+
+            <div class="well">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul style="padding-left:20px;">
+                            <li>
+                                <a href="{{url('privacy-policy')}}">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a href="{{url('terms')}}">Terms</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    </div>
+    @php
+        $unlocked_ids = [];
+        $following_ids = [];
+    if(Auth::user())
+    {
+        $following_ids = Auth::user()->following->pluck('id')->toArray();
+        $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
+    }
+    @endphp
       <div class="col-lg-9">
         @if(Session::has('message'))
             <p class="alert alert-success">{{ Session::get('message') }}</p>

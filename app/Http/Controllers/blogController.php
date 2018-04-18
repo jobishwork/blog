@@ -29,29 +29,27 @@ class BlogController extends Controller
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
-            $following_ids = [];//$user->following->pluck('id')->toArray();
-            if ($following_ids)
-            {
-                $followig_users = true;
-            }
-            else
-            {
-                $followig_users = false;
-            }
+            // $following_ids = $user->following->pluck('id')->toArray();
+            // if ($following_ids)
+            // {
+            //     $followig_users = true;
+            // }
+            // else
+            // {
+            //     $followig_users = false;
+            // }
 
             // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             $favorite_categories = $user->favoriteCategories->pluck('id');
             $favorite_posts_ids = CategoryPost::whereIn('category_id', $favorite_categories)->get()->pluck('post_id');
 
-            $posts = Post::whereIn('id',$favorite_posts_ids)->paginate(5);
+            $posts = Post::whereIn('id',$favorite_posts_ids)
+                ->orderBy('vote_counts','desc')
+                ->orderBy('view_count','desc')
+                ->orderBy('created_at','desc')
+                ->withCount('likes','dislikes')
+                ->paginate(5);
             $categories = $user->favoriteCategories;
-
-            // $posts = Post::where('is_suspended',0)
-            //     ->orderBy('vote_counts','desc')
-            //     ->orderBy('view_count','desc')
-            //     ->orderBy('created_at','desc')
-            //     ->withCount('likes','dislikes')
-            //     ->paginate(5);
             return view('my_profile',compact('posts','saved_ids','categories'));
         }
         else
@@ -245,12 +243,11 @@ class BlogController extends Controller
         if (Auth::user())
         {
             $user = user::find($id);
-            $page_title = "Created by '$user->name'";
-            $posts = $user->posts()->orderBy('created_at','desc')->paginate(5);
-            $user = Auth::user();
-            $saved_articles = $user->savedArticles()->get()->toArray();
-            $saved_ids = array_pluck( $saved_articles, 'id' );
-            return view('list',compact('posts','page_title','saved_ids'));
+            $posts = $user->posts()
+                ->orderBy('created_at','desc')
+                ->withCount('likes','dislikes')
+                ->paginate(5);
+            return view('user_profile',compact('posts','user'));
         }
         else
         {

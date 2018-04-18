@@ -104,7 +104,8 @@ class RegisterController extends Controller
                         $photo_name = rand(1,9999).time().'.'.$request->profile_photo->getClientOriginalExtension();
                         $request->profile_photo->move(public_path('files/user/profile_photo/uploads'), $photo_name);
                         Image::make(public_path('files/user/profile_photo/uploads/'.$photo_name))
-                                                                    ->resize(400,400)->save('files/user/profile_photo/resized/'.$photo_name);
+                                                                    ->resize(400, null, function ($constraint) { $constraint->aspectRatio(); })
+                                                                    ->save('files/user/profile_photo/resized/'.$photo_name);
                         Image::make(public_path('files/user/profile_photo/uploads/'.$photo_name))
                                                                     ->fit(82, 84)
                                                                     ->save('files/user/profile_photo/thumb/'.$photo_name);
@@ -123,3 +124,8 @@ class RegisterController extends Controller
         return back();
     }
 }
+
+
+// $img->resize(300, null, function ($constraint) {
+//     $constraint->aspectRatio();
+// });

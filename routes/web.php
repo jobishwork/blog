@@ -46,15 +46,15 @@ Route::get('notification', 'NotificationController@index');
 Route::get('settings', 'Auth\ResetPasswordController@changeForm');
 
 Route::get('following/{id}', 'FollowerController@store');
-Route::get('my_followers', 'FollowerController@myFollowers');
-Route::get('my_followings', 'FollowerController@myFollowings');
+Route::get('followers/{id}', 'FollowerController@followers');
+Route::get('followings/{id}', 'FollowerController@followings');
 
 
 Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 
 Route::get('favorite-category', 'FavoriteCategoryController@index');
-Route::post('favorite_category', 'FavoriteCategoryController@store');
+Route::post('favorite-category', 'FavoriteCategoryController@store');
 
 Route::get('privacy-policy', function () {
      return view('privacy_policy');

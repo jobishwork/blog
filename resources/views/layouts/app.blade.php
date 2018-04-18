@@ -73,7 +73,6 @@
                         <li><a href="{{ url('/settings') }}">Settings</a></li>
                         <li><a href="{{ url('/inbox') }}">Inbox</a></li>
                         <li><a href="{{ url('/sent_messages') }}">Sent Messages </a></li>
-                        <li><a href="{{ url('/favorite-category')}}">Favorite Categories</a></li>
                         @if(Auth::user()->type == 1)
                         <li><a href="{{ url('/users/list') }}">Users</a></li>
                         <li><a href="{{ url('/reported-articles/list') }}">Reported Articles</a></li>

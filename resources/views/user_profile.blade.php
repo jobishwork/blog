@@ -3,7 +3,65 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 right-sidebar">
-            @include('sidebar')
+            <div class="well" >
+                @if($user->profile_photo)
+                   <img class="img-rounded img-responsive" src="{{ url('files/user/profile_photo/resized/'.$user->profile_photo) }}">
+                @else
+                   <img class="img-rounded img-responsive" src="{{ url('images/default-user.png') }}">
+                @endif
+                <br>
+                <a href="{{url('blog/user/'.$user->id)}}" class="btn btn-block btn-default">{{$user->name}}</a>
+                <ul>
+                    <li style="margin-top:10px">
+                        <a  href="{{ url('message/create/'.$user->id) }}">Send Private Message</a>
+                    </li>
+                </ul>
+
+
+            </div>
+
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ url('/followers/'.$user->id) }}" class="btn  btn-primary">
+                            {{$user->followers->count()}}
+                            <br>
+                            Followers
+                        </a>
+                    </div>
+                    <div class="col-md-6 ">
+                        <a href="{{ url('/followings/'.$user->id) }}" class="btn btn-primary">
+                            {{$user->following->count()}}
+                            <br>
+                            Following
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="well" style="padding:5px;">
+                <ul class="list-group" style="margin-bottom:0px;">
+                    <li class="list-group-item"> <a href="{{url('newArticles')}}"> New Articles </a> </li>
+                    <li class="list-group-item"> <a href="{{url('topArticles')}}"> Most Viewed Articles </a> </li>
+                    <li class="list-group-item"> <a href="{{url('saved_articles')}}"> Saved Articles </a> </li>
+                    <li class="list-group-item"> <a href="{{url('blog/user/'.Auth::user()->id)}}"> My Articles </a> </li>
+                </ul>
+            </div>
+
+            <div class="well">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul style="padding-left:20px;">
+                            <li>
+                                <a href="{{url('privacy-policy')}}">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a href="{{url('terms')}}">Terms</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-9">
         @if(Session::has('message'))
@@ -21,9 +79,11 @@
             $likes  = [];
             $dislikes = [];
             $reoported_ids = [];
+            $saved_ids = [];
 
         if(Auth::user())
         {
+            $saved_ids = Auth::user()->savedArticles->pluck('id')->toArray();
             $following_ids = Auth::user()->following->pluck('id')->toArray();
             $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
             $likes = Auth::user()->likes->pluck('id')->toArray();
@@ -132,7 +192,7 @@
               </div>
             </div>
             @else
-                <div class="no-records"><i><h4 align="center">Please select one or more interested area to view the articles</h4></i></div>
+                <div class="no-records"><i><h5>No records found.</h5></i></div>
             @endif
          @endIf
       </div>
