@@ -11,6 +11,9 @@ use Session;
 use Image;
 use DB;
 
+use App\Mail\WelcomeMail;
+use Mail;
+
 class RegisterController extends Controller
 {
     /*
@@ -67,11 +70,14 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        Mail::to($data['email'])->send(new WelcomeMail($user));
+        return $user;
     }
 
     protected function registered(Request $request, $user)
