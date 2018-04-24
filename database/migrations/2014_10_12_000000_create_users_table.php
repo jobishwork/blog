@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('provider_id')->nullable();
             $table->tinyInteger('type')->default(2);
             $table->integer('credits')->default(0);
+            $table->boolean('confirmed')->default(0);
+            $table->string('confirmation_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

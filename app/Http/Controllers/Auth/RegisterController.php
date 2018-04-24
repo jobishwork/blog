@@ -9,10 +9,12 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Session;
 use Image;
+use Auth;
 use DB;
-
 use App\Mail\WelcomeMail;
 use Mail;
+use Illuminate\Auth\Events\Registered;
+use Carbon\Carbon;
 
 class RegisterController extends Controller
 {
@@ -43,7 +45,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('edit','update');
+        $this->middleware('guest')->except('edit','update','confirm');
         $this->middleware('auth')->only('edit', 'update');
     }
 
@@ -70,20 +72,65 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $confirmation_code = str_random(30);
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'confirmation_code' => $confirmation_code,
         ]);
 
         Mail::to($data['email'])->send(new WelcomeMail($user));
         return $user;
     }
 
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        // $this->guard()->login($user);
+
+        return $this->registered($request, $user)?: redirect($this->redirectPath());
+    }
+
     protected function registered(Request $request, $user)
     {
-        Session::flash('message', 'Welcome '.ucfirst($user->name).'. You have been successfully registered and logged into the site.');
+        Session::flash('message', 'Welcome '.ucfirst($user->name).'. You have been successfully registered.Thanks for signing up! Please check your email.');
         return redirect()->intended($this->redirectPath());
+    }
+
+    public function confirm($confirmation_code)
+    {
+        if( ! $confirmation_code)
+        {
+            return redirect('/login')->with('message', 'Invalid Request');
+        }
+        $user = User::whereConfirmationCode($confirmation_code)->first();
+        if ( ! $user)
+        {
+            return redirect('/login')->with('message', 'Invalid Request');
+        }
+        $time = Carbon::parse($user->updated_at);
+        $now = Carbon::now();
+        $duration = $time->diffInMinutes($now);
+        if($duration>2)
+            return redirect('/login')->with('message', 'Email confirmation code has been expired. <a href="verify/resend/'.$user->id.'">Resend confirmation mail</a>' );
+        $user->confirmed = 1;
+        $user->confirmation_code = null;
+        $user->save();
+        Session::flash('message', 'Welcome '.ucfirst($user->name).'. You have been successfully verified your account and logged into the site.');
+        Auth::login($user);
+        return redirect()->intended($this->redirectPath());
+    }
+
+    public function resend($id)
+    {
+        $user = User::find($id);
+        $confirmation_code = str_random(30);
+        Mail::to($user->email)->send(new WelcomeMail($user));
+        return redirect('/login')->with('success', 'Confirmation email hass been sent successfully.');
     }
 
     public function edit($id)

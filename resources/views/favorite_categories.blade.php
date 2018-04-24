@@ -11,7 +11,7 @@
         @if(Session::has('message'))
         <p class="alert alert-warning">{{ Session::get('message') }}</p>
       @endif
-        <h3><a href="">Please select one or more Favorite Categories</a></h3>
+        <h3><a href="">Please select one or more categories to continue</a></h3>
         <hr>
         <form name="form1" method="POST" action="{{url('favorite-category')}}">
             {{ csrf_field() }}

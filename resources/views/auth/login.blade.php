@@ -7,6 +7,14 @@
             @if(Request::input('ref') == ('add-post' || 'save'))
             <p class="alert alert-warning">Please login to continue.</p>
             @endIf
+            @if(Session::has('message'))
+                <br>
+                <p class="alert alert-danger">{!! Session::get('message') !!}</p>
+            @endif
+            @if(Session::has('success'))
+                <br>
+                <p class="alert alert-success">{!! Session::get('success') !!}</p>
+            @endif
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">

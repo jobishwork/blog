@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Session;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -41,8 +42,16 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        Session::flash('message', 'Welcome '.ucfirst($user->name).'. You have been successfully logged in.');
-        return redirect()->intended($this->redirectPath());
+        if($user->confirmed == 0)
+        {
+            Auth::logout();
+            return redirect('/login')->with('message', 'Please verify your email address to continue');
+        }
+        else
+        {
+            Session::flash('message', 'Welcome '.ucfirst($user->name).'. You have been successfully logged in.');
+            return redirect()->intended($this->redirectPath());
+        }
     }
 
     public function logout(Request $request)

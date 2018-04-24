@@ -29,18 +29,10 @@ class BlogController extends Controller
             $user = Auth::user();
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
-            // $following_ids = $user->following->pluck('id')->toArray();
-            // if ($following_ids)
-            // {
-            //     $followig_users = true;
-            // }
-            // else
-            // {
-            //     $followig_users = false;
-            // }
 
-            // $posts = Post::whereIn('user_id',$following_ids)->paginate(5);
             $favorite_categories = $user->favoriteCategories->pluck('id');
+            if($favorite_categories->count()<1)
+                return redirect('/favorite-category');//->with('message', 'Invalid Request');
             $favorite_posts_ids = CategoryPost::whereIn('category_id', $favorite_categories)->get()->pluck('post_id');
 
             $posts = Post::whereIn('id',$favorite_posts_ids)
@@ -432,7 +424,7 @@ class BlogController extends Controller
     {
         return $rules = [
                 'title' => 'required',
-                'points_required' => 'required_if:is_locked,1|numeric|min:1|Max:10000',
+                // 'points_required' => 'required_if:is_locked,1|numeric|min:1|Max:10000',
                 'post' => 'required',
                 'categories' => 'required',
             ];

@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('123456'),
                 'type' => 1,
+                'confirmed' =>1,
             ]);
 
         factory(App\Category::class,5)->create();

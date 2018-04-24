@@ -50,13 +50,10 @@ class FavoriteCategoryController extends Controller
         else
             $favorites = [];
         $user->favoriteCategories()->sync($favorites);
-        // foreach ($favorites as $favorite)
-        // {
-        //     $category = Category::find($favorite);
-        //     $user->favoriteCategories()->sync($category);
-        // }
-        Session::flash('message', 'Favorite categories has been updated successfully.');
-        return back();
+
+        return redirect('/')->with('message', 'Categories has been updated successfully.');
+        // Session::flash('message', '');
+        // return back();
     }
 
     /**

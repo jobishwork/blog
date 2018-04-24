@@ -37,8 +37,6 @@ Route::get('saveArticle/{id}', 'BlogController@saveArticle');
 Route::get('password/change','Auth\ResetPasswordController@changeForm');
 Route::post('password/change','Auth\ResetPasswordController@change');
 
-Route::get('profile/edit/{id}', 'Auth\RegisterController@edit');
-Route::post('profile/update/{id}', 'Auth\RegisterController@update');
 
 Route::get('tags', 'TagController@index');
 Route::get('favorite', 'FavoriteController@index');
@@ -65,7 +63,12 @@ Route::get('terms', function () {
  });
 
 Route::get('/users/list', 'UserController@index');
+
+Route::get('profile/edit/{id}', 'Auth\RegisterController@edit');
+Route::post('profile/update/{id}', 'Auth\RegisterController@update');
 Route::get('users/edit/{id}', 'Auth\RegisterController@edit');
+Route::get('register/verify/{confirmationCode}','Auth\RegisterController@confirm');
+Route::get('verify/resend/{id}', 'Auth\RegisterController@resend');
 
 Route::get('/transactions/list', 'TransactionController@index');
 Route::get('points/create', 'TransactionController@create');
@@ -90,6 +93,6 @@ Route::get('suspend-article/{id}', 'SuspendController@store');
 
 Route::get('my-profile', 'ProfileController@index');
 
-
-
 Route::get('/email', 'EmailController@send');
+
+
