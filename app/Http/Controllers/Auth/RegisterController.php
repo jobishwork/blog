@@ -115,7 +115,7 @@ class RegisterController extends Controller
         $time = Carbon::parse($user->updated_at);
         $now = Carbon::now();
         $duration = $time->diffInMinutes($now);
-        if($duration>2)
+        if($duration>1440)
             return redirect('/login')->with('message', 'Email confirmation code has been expired. <a href="verify/resend/'.$user->id.'">Resend confirmation mail</a>' );
         $user->confirmed = 1;
         $user->confirmation_code = null;
@@ -129,6 +129,8 @@ class RegisterController extends Controller
     {
         $user = User::find($id);
         $confirmation_code = str_random(30);
+        $user->confirmation_code = $confirmation_code;
+        $user->save();
         Mail::to($user->email)->send(new WelcomeMail($user));
         return redirect('/login')->with('success', 'Confirmation email hass been sent successfully.');
     }
