@@ -115,7 +115,7 @@ class RegisterController extends Controller
         $time = Carbon::parse($user->updated_at);
         $now = Carbon::now();
         $duration = $time->diffInMinutes($now);
-        if($duration>1440)
+        if($duration>2)
             return redirect('/login')->with('message', 'Email confirmation code has been expired. <a href="verify/resend/'.$user->id.'">Resend confirmation mail</a>' );
         $user->confirmed = 1;
         $user->confirmation_code = null;
