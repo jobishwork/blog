@@ -25,8 +25,8 @@ class BlogController extends Controller
     {
         if (Auth::user())
         {
-            // return $unlocked_ids = Auth::user()->unlockedArticles->pluck('id')->toArray();
             $user = Auth::user();
+            // return $user->posts->first()->view_count;
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
 
@@ -422,9 +422,10 @@ class BlogController extends Controller
 
     public function validationRules()
     {
+
         return $rules = [
                 'title' => 'required',
-                // 'points_required' => 'required_if:is_locked,1|numeric|min:1|Max:10000',
+                'points_required' => 'nullable|numeric|min:1|Max:10000|required_if:is_locked,1',
                 'post' => 'required',
                 'categories' => 'required',
             ];
