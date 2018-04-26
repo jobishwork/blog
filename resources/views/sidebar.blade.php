@@ -13,19 +13,29 @@
             <div class="well">
                 <div class="row">
                     <div class="col-md-6">
-                        <a href="{{ url('/followers/'.Auth::user()->id) }}" class="btn  btn-primary">
+                        <a style="width: 80px;" href="{{ url('/followers/'.Auth::user()->id) }}" class="btn btn-xs  btn-primary">
                             {{Auth::user()->followers->count()}}
                             <br>
                             Followers
                         </a>
                     </div>
                     <div class="col-md-6 ">
-                        <a href="{{ url('/followings/'.Auth::user()->id) }}" class="btn btn-primary">
+                        <a style="width: 80px;" href="{{ url('/followings/'.Auth::user()->id) }}" class="btn btn-xs btn-primary">
                             {{Auth::user()->following->count()}}
                             <br>
                             Following
                         </a>
                     </div>
+                    
+                    <div class="col-md-6 ">
+                        <br>
+                        <a style="width: 80px;" class="btn btn-xs btn-primary">
+                            {{Auth::user()->Posts->count()}}
+                            <br>
+                            Post Content
+                        </a>
+                    </div>
+
                 </div>
             </div>
 

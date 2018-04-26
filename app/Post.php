@@ -50,6 +50,6 @@ class Post extends Model
 
     public function ratings()
     {
-        return $this->BelongsToMany("App\User","post_ratings");
+        return $this->BelongsToMany("App\User","post_ratings")->withPivot('score');;
     }
 }

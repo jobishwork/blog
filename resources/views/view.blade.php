@@ -84,6 +84,7 @@
             <i>Created on {{date('F d, Y',strtotime($blog->created_at))}} by
                 <a href="{{url('blog/user/'.$blog->user->id)}}">{{$blog->user->name}}</a>
 
+                <a class="btn btn-info btn-xs">Rating:{{$blog->score}}</a>
                 @if(Auth::user() && ($blog->user->id != Auth::User()->id))
 
                     <a style="width:60px;" id="" onclick="follow({{$blog->user->id}})" href="javascript:void(0)" class="btn btn-default btn-xs follow_link_{{$blog->user->id}}">
@@ -126,17 +127,21 @@
             </div>
         <hr>
 
-        <div id="star-rating">
+        <div class="col-md-2"  id="star-rating">
             Your Rating
             <input type="radio" @if($score == 1) checked="" @endif name="example" class="rating" value="1" />
             <input type="radio" @if($score == 2) checked="" @endif name="example" class="rating" value="2" />
             <input type="radio" @if($score == 3) checked="" @endif name="example" class="rating" value="3" />
             <input type="radio" @if($score == 4) checked="" @endif name="example" class="rating" value="4" />
-            <input type="radio" @if($score == 5) checked="" @endif name="example" class="rating" value="5" />
+            <input type="radio"  @if($score == 5) checked="" @endif name="example" class="rating" value="5" />                
         </div>
-
+        <div class="col-md-">
+            <br>
+            <label id="last" ></label>
+            
+        </div>        
         <hr>
-
+        
          @if(Auth::check())
          <div class="well">
             <h4>Leave a Comment:</h4>

@@ -107,6 +107,17 @@ class BlogController extends Controller
      */
     public function show(Post $blog)
     {
+        // return $blog->ratings()->get()->first()->pivot->score/;
+        // $scores = $blog->ratings()->get();
+        // $score_value = 0;
+       
+        // foreach ($scores as $key => $score) 
+        // {
+        //   $score_value = $score_value + $score->pivot->score;
+        // }
+        // // return $key+1;
+        // return $score_value/($key+1);
+      
         // if($blog->view_count)
         // {
         //     $count = $blog->view_count->count;

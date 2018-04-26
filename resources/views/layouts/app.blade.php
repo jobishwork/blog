@@ -35,8 +35,6 @@
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
 
-
-
                <!-- Left Side Of Navbar -->
                <ul class="nav navbar-nav">
                   <li><a href="{{ url('/') }}">Home</a></li>
@@ -163,7 +161,8 @@
         $(function()
         {
             $('#star-rating').rating(function(vote, event) // Call the rating plugin
-            {
+            {      
+              $('#last').html('<img width="15" src="{{url('images/btn_loader2.gif')}}">');                        
                 // we have vote and event variables now, lets send vote to server.
                 $.ajax(
                 {
@@ -172,10 +171,16 @@
                 data: {rate: vote},
                 success: function(response)
                 {
-                    // alert(response);
+                  if(response == 'success')  
+                  {                    
+                    var str = "Thank you for rating!";
+                    var result = str.fontcolor("green");
+                    document.getElementById("last").innerHTML = result;                    
+                  }                            
                 },
                 });
             });
+
         });
     </script>
  @endif
