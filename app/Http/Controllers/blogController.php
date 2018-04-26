@@ -130,7 +130,14 @@ class BlogController extends Controller
             $saved_articles = $user->savedArticles()->get()->toArray();
             $saved_ids = array_pluck( $saved_articles, 'id' );
             $comments = $blog->comments;
-            return view('view',compact('blog','comments','saved_ids'));
+            if($user->ratings()->where('post_id', $blog->id)->exists())
+            {
+                $rating = Auth::user()->ratings()->where('post_id',$blog->id)->get();
+                $score = $rating->first()->pivot->score;
+            }
+            else
+                $score = 0;
+            return view('view',compact('blog','comments','saved_ids','score'));
         }
         else
         {
@@ -407,7 +414,6 @@ class BlogController extends Controller
       //   // Notify editor that the upload failed
       //   header("HTTP/1.1 500 Server Error");
       // }
-
     }
 
     public function search(Request $request)

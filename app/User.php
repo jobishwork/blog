@@ -96,4 +96,9 @@ class User extends Authenticatable
     {
         return $this->BelongsToMany("App\Post","reported_articles");
     }
+
+    public function ratings()
+    {
+        return $this->BelongsToMany("App\Post","post_ratings")->withPivot('score');
+    }
 }

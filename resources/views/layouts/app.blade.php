@@ -9,6 +9,7 @@
       <link href="{{ url('/') }}/css/bootstrap.min.css" rel="stylesheet">
       <link href="{{ url('/') }}/css/styles.css" rel="stylesheet">
       <link href="{{ url('/') }}/css/select2.css" rel="stylesheet">
+      <link href="{{ url('/') }}/css/rating.css" rel="stylesheet" type="text/css"/>
    </head>
    <body>
     @php
@@ -110,6 +111,7 @@
       <!-- Bootstrap Core JavaScript -->
       <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
       <script src="{{ url('/') }}/js/select2.min.js"></script>
+      <script src="{{ url('/') }}/js/rating.js"></script>
       <script type="text/javascript">
          $(".js-example-basic-multiple").select2({
             placeholder: "Select one more categories"
@@ -131,9 +133,10 @@
             }
         });
     });
-</script>
+    </script>
 
   <script src="{{url('js/tinymce/tinymce.min.js')}}"></script>
+
   <script>tinymce.init({
   selector: '.editor',
   height: 300,
@@ -153,7 +156,31 @@
   });
   </script>
 
+
+
+ @if(isset ($blog->id) )
      <script type="text/javascript">
+        $(function()
+        {
+            $('#star-rating').rating(function(vote, event) // Call the rating plugin
+            {
+                // we have vote and event variables now, lets send vote to server.
+                $.ajax(
+                {
+                url:'{{url('rating')}}/'+{{$blog->id}},
+                type: "GET",
+                data: {rate: vote},
+                success: function(response)
+                {
+                    // alert(response);
+                },
+                });
+            });
+        });
+    </script>
+ @endif
+
+    <script type="text/javascript">
         function save(id)
         {
             $('#save_link_'+id).html('<img width="15" src="{{url('images/btn_loader2.gif')}}">');

@@ -24,6 +24,7 @@ class CreatePostsTable extends Migration
             $table->integer('view_count')->default(0);
             $table->integer('vote_counts')->default(0);
             $table->tinyInteger('is_suspended')->default(0);
+            $table->decimal('score', 8, 2)->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

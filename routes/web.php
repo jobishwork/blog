@@ -94,4 +94,6 @@ Route::get('my-profile', 'ProfileController@index');
 
 Route::get('/email', 'EmailController@send');
 
+Route::get('/rating/{id}', 'RatingController@store');
+
 

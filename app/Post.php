@@ -47,4 +47,9 @@ class Post extends Model
     {
         return $this->BelongsToMany("App\User","reported_articles");
     }
+
+    public function ratings()
+    {
+        return $this->BelongsToMany("App\User","post_ratings");
+    }
 }
