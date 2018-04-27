@@ -125,23 +125,35 @@
                     @endif
                 </div>
             </div>
+
+
+        @if(Auth::check())
+
         <hr>
+
+
 
         <div class="col-md-2"  id="star-rating">
             Your Rating
-            <input type="radio" @if($score == 1) checked="" @endif name="example" class="rating" value="1" />
-            <input type="radio" @if($score == 2) checked="" @endif name="example" class="rating" value="2" />
-            <input type="radio" @if($score == 3) checked="" @endif name="example" class="rating" value="3" />
-            <input type="radio" @if($score == 4) checked="" @endif name="example" class="rating" value="4" />
-            <input type="radio"  @if($score == 5) checked="" @endif name="example" class="rating" value="5" />                
+            <input type="radio" @if(isset($score) && $score == 1) checked="" @endif name="example" class="rating" value="1" />
+            <input type="radio" @if(isset($score) && $score == 2) checked="" @endif name="example" class="rating" value="2" />
+            <input type="radio" @if(isset($score) && $score == 3) checked="" @endif name="example" class="rating" value="3" />
+            <input type="radio" @if(isset($score) && $score == 4) checked="" @endif name="example" class="rating" value="4" />
+            <input type="radio"  @if(isset($score) && $score == 5) checked="" @endif name="example" class="rating" value="5" />
         </div>
+
+
+
         <div class="col-md-">
             <br>
             <label id="last" ></label>
-            
-        </div>        
+
+        </div>
+
+   @endIf
+
         <hr>
-        
+
          @if(Auth::check())
          <div class="well">
             <h4>Leave a Comment:</h4>
